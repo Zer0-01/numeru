@@ -10,12 +10,26 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: ThemeData.light(useMaterial3: true),
-      dark: ThemeData.dark(useMaterial3: true),
+      light: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        brightness: Brightness.light,
+      ),
+      dark: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.dark,
+        ),
+      ),
       initial: AdaptiveThemeMode.light,
+      debugShowFloatingThemeButton: true,
       builder:
-          (light, dark) =>
-              MaterialApp.router(routerConfig: _appRouter.config()),
+          (light, dark) => MaterialApp.router(
+            routerConfig: _appRouter.config(),
+            theme: light,
+            darkTheme: dark,
+          ),
     );
   }
 }
