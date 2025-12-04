@@ -9,21 +9,39 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i2;
+import 'package:auto_route/auto_route.dart' as _i3;
 import 'package:numeru/presentation/screen/home/home_setup_screen.dart' as _i1;
+import 'package:numeru/presentation/screen/split/split_setup_screen.dart'
+    as _i2;
 
 /// generated route for
 /// [_i1.HomeSetupScreen]
-class HomeSetupRoute extends _i2.PageRouteInfo<void> {
-  const HomeSetupRoute({List<_i2.PageRouteInfo>? children})
+class HomeSetupRoute extends _i3.PageRouteInfo<void> {
+  const HomeSetupRoute({List<_i3.PageRouteInfo>? children})
     : super(HomeSetupRoute.name, initialChildren: children);
 
   static const String name = 'HomeSetupRoute';
 
-  static _i2.PageInfo page = _i2.PageInfo(
+  static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
       return const _i1.HomeSetupScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i2.SplitSetupScreen]
+class SplitSetupRoute extends _i3.PageRouteInfo<void> {
+  const SplitSetupRoute({List<_i3.PageRouteInfo>? children})
+    : super(SplitSetupRoute.name, initialChildren: children);
+
+  static const String name = 'SplitSetupRoute';
+
+  static _i3.PageInfo page = _i3.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.SplitSetupScreen();
     },
   );
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // context.router.push(const SplitBillRoute());
+                  context.router.pushPath('/split');
                 },
                 icon: const Icon(Icons.attach_money_outlined),
                 label: const Text(
