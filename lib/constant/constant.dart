@@ -1,0 +1,1 @@
+enum RoundingTypeEnum { up, down }

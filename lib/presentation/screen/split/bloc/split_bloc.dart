@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:numeru/constant/constant.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/data/models/summary_model.dart';
 
@@ -14,6 +15,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnChangedIncludeSstEvent>(_onChangedIncludeSstEvent);
     on<OnChangedHaveServiceChargeEvent>(_onChangedHaveServiceChargeEvent);
     on<OnPressedSummaryEvent>(_onPressedSummaryEvent);
+    on<OnChangedHaveRoundingEvent>(_onChangedHaveRoundingEvent);
+    on<OnChangedRoundingTypeEvent>(_onChangedRoundingTypeEvent);
   }
 
   void _onAddPersonEvent(OnAddPersonEvent event, Emitter<SplitState> emit) {
@@ -82,13 +85,14 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       double total = 0;
       for (var f in p.foods) {
         if (state.isIncludeSst) {
-          total += f.price;
-        } else {
           total += ((f.price + 0.06) + f.price);
+        } else {
+          total += f.price;
         }
       }
 
       if (state.isHaveServiceCharge) {
+        debugPrint(service.toString());
         total += service;
       }
 
@@ -111,5 +115,26 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     );
 
     emit(state.copyWith(summaryModel: summaryModel));
+  }
+
+  void _onChangedHaveRoundingEvent(
+    OnChangedHaveRoundingEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    emit(state.copyWith(isHaveRounding: !state.isHaveRounding));
+  }
+
+  void _onChangedRoundingTypeEvent(
+    OnChangedRoundingTypeEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        roundingType:
+            state.roundingType == RoundingTypeEnum.up
+                ? RoundingTypeEnum.down
+                : RoundingTypeEnum.up,
+      ),
+    );
   }
 }

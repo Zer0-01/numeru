@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:numeru/constant/constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
@@ -7,10 +8,12 @@ import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 class BillSettingWidget extends StatelessWidget {
   final TextEditingController serviceChargeController;
   final TextEditingController totalBillController;
+  final TextEditingController roundingController;
   const BillSettingWidget({
     super.key,
     required this.serviceChargeController,
     required this.totalBillController,
+    required this.roundingController,
   });
 
   @override
@@ -32,7 +35,7 @@ class BillSettingWidget extends StatelessWidget {
                   Row(
                     spacing: 4,
                     children: [
-                      Expanded(child: Text("Include SST")),
+                      Expanded(child: Text("Include SST 6%")),
                       Switch.adaptive(
                         value: state.isIncludeSst,
                         onChanged: (_) {
@@ -61,6 +64,46 @@ class BillSettingWidget extends StatelessWidget {
                     AppTextFieldWidget(
                       controller: serviceChargeController,
                       label: "Service Charge",
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
+                  Row(
+                    spacing: 4,
+                    children: [
+                      Expanded(child: Text("Rounding")),
+                      Switch.adaptive(
+                        value: state.isHaveRounding,
+                        onChanged: (_) {
+                          context.read<SplitBloc>().add(
+                            OnChangedHaveRoundingEvent(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  if (state.isHaveRounding)
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.read<SplitBloc>().add(
+                              OnChangedRoundingTypeEvent(),
+                            );
+                          },
+                          icon: Icon(
+                            state.roundingType == RoundingTypeEnum.up
+                                ? Icons.add
+                                : Icons.remove,
+                          ),
+                        ),
+                        Expanded(
+                          child: AppTextFieldWidget(
+                            controller: roundingController,
+                            label: "Rounding",
+                          ),
+                        ),
+                      ],
                     ),
                   Row(
                     spacing: 4,

@@ -8,6 +8,10 @@ class PersonWidget extends StatelessWidget {
   final TextEditingController nameController;
   const PersonWidget({super.key, required this.nameController});
 
+  bool _isButtonEnabled() {
+    return nameController.text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
@@ -26,12 +30,15 @@ class PersonWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: FilledButton(
-                  onPressed: () {
-                    context.read<SplitBloc>().add(
-                      OnAddPersonEvent(name: nameController.text),
-                    );
-                    nameController.clear();
-                  },
+                  onPressed:
+                      _isButtonEnabled()
+                          ? () {
+                            context.read<SplitBloc>().add(
+                              OnAddPersonEvent(name: nameController.text),
+                            );
+                            nameController.clear();
+                          }
+                          : null,
                   style: FilledButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

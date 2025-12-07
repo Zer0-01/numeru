@@ -19,6 +19,16 @@ class _SplitScreenState extends State<SplitScreen> {
   final TextEditingController _serviceChargeController =
       TextEditingController();
   final TextEditingController _totalBillController = TextEditingController();
+  final TextEditingController _roundingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.addListener(_onChanged);
+    _totalBillController.addListener(_onChanged);
+    _serviceChargeController.addListener(_onChanged);
+    _roundingController.addListener(_onChanged);
+  }
 
   @override
   void dispose() {
@@ -34,7 +44,12 @@ class _SplitScreenState extends State<SplitScreen> {
     }
     _serviceChargeController.dispose();
     _totalBillController.dispose();
+    _roundingController.dispose();
     super.dispose();
+  }
+
+  void _onChanged() {
+    setState(() {});
   }
 
   @override
@@ -52,10 +67,12 @@ class _SplitScreenState extends State<SplitScreen> {
           BillSettingWidget(
             serviceChargeController: _serviceChargeController,
             totalBillController: _totalBillController,
+            roundingController: _roundingController,
           ),
           SummaryButtonWidget(
             serviceChargeController: _serviceChargeController,
             totalBillController: _totalBillController,
+            roundingController: _roundingController,
           ),
         ],
       ),
