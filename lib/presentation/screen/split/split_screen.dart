@@ -16,6 +16,9 @@ class _SplitScreenState extends State<SplitScreen> {
   final Map<int, TextEditingController> _foodControllers = {};
   final Map<int, TextEditingController> _quantityControllers = {};
   final Map<int, TextEditingController> _priceControllers = {};
+  final TextEditingController _serviceChargeController =
+      TextEditingController();
+  final TextEditingController _totalBillController = TextEditingController();
 
   @override
   void dispose() {
@@ -29,6 +32,8 @@ class _SplitScreenState extends State<SplitScreen> {
     for (var c in _priceControllers.values) {
       c.dispose();
     }
+    _serviceChargeController.dispose();
+    _totalBillController.dispose();
     super.dispose();
   }
 
@@ -44,8 +49,14 @@ class _SplitScreenState extends State<SplitScreen> {
             quantityControllers: _quantityControllers,
             priceControllers: _priceControllers,
           ),
-          BillSettingWidget(),
-          SummaryButtonWidget(),
+          BillSettingWidget(
+            serviceChargeController: _serviceChargeController,
+            totalBillController: _totalBillController,
+          ),
+          SummaryButtonWidget(
+            serviceChargeController: _serviceChargeController,
+            totalBillController: _totalBillController,
+          ),
         ],
       ),
     );

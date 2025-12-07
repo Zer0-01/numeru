@@ -5,7 +5,13 @@ import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 
 class BillSettingWidget extends StatelessWidget {
-  const BillSettingWidget({super.key});
+  final TextEditingController serviceChargeController;
+  final TextEditingController totalBillController;
+  const BillSettingWidget({
+    super.key,
+    required this.serviceChargeController,
+    required this.totalBillController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +58,19 @@ class BillSettingWidget extends StatelessWidget {
                     ],
                   ),
                   if (state.isHaveServiceCharge)
-                    AppTextFieldWidget(label: "Service Charge"),
+                    AppTextFieldWidget(
+                      controller: serviceChargeController,
+                      label: "Service Charge",
+                    ),
                   Row(
                     spacing: 4,
                     children: [
                       Expanded(child: Text("Total Bill")),
-                      Expanded(child: AppTextFieldWidget()),
+                      Expanded(
+                        child: AppTextFieldWidget(
+                          controller: totalBillController,
+                        ),
+                      ),
                     ],
                   ),
                 ],

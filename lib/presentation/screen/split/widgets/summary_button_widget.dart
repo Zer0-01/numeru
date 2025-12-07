@@ -3,7 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 
 class SummaryButtonWidget extends StatelessWidget {
-  const SummaryButtonWidget({super.key});
+  final TextEditingController serviceChargeController;
+  final TextEditingController totalBillController;
+
+  const SummaryButtonWidget({
+    super.key,
+    required this.serviceChargeController,
+    required this.totalBillController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +21,16 @@ class SummaryButtonWidget extends StatelessWidget {
           sliver: SliverToBoxAdapter(
             child: SafeArea(
               child: FilledButton(
-                onPressed: () {},
+                onPressed: () {
+                  debugPrint("Helo");
+                  context.read<SplitBloc>().add(
+                    OnPressedSummaryEvent(
+                      serviceCharge:
+                          double.tryParse(serviceChargeController.text) ?? 0,
+                      totalBill: double.tryParse(totalBillController.text) ?? 0,
+                    ),
+                  );
+                },
                 style: FilledButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
