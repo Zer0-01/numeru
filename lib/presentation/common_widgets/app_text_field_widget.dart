@@ -9,6 +9,8 @@ class AppTextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
+  final Widget? prefixIcon;
+  final BoxConstraints? prefixIconConstraints;
 
   const AppTextFieldWidget({
     super.key,
@@ -20,6 +22,8 @@ class AppTextFieldWidget extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.onChanged,
+    this.prefixIcon,
+    this.prefixIconConstraints,
   });
 
   @override
@@ -37,14 +41,15 @@ class AppTextFieldWidget extends StatelessWidget {
         labelText: label,
         hintText: hint,
         isDense: true,
-
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        prefixIcon: prefixIcon,
+        prefixIconConstraints: prefixIconConstraints,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: theme.colorScheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.6),
         ),
       ),

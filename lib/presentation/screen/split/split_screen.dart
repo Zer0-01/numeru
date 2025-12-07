@@ -1,14 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:numeru/presentation/screen/split/widgets/person_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_widget.dart';
 
-class SplitScreen extends StatelessWidget {
+class SplitScreen extends StatefulWidget {
   const SplitScreen({super.key});
+
+  @override
+  State<SplitScreen> createState() => _SplitScreenState();
+}
+
+class _SplitScreenState extends State<SplitScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final Map<int, TextEditingController> _foodControllers = {};
+  final Map<int, TextEditingController> _quantityControllers = {};
+  final Map<int, TextEditingController> _priceControllers = {};
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    for (var c in _foodControllers.values) {
+      c.dispose();
+    }
+    for (var c in _quantityControllers.values) {
+      c.dispose();
+    }
+    for (var c in _priceControllers.values) {
+      c.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Split"), centerTitle: true, elevation: 2),
-      body: CustomScrollView(slivers: [PersonWidget()]),
+      body: CustomScrollView(
+        slivers: [
+          PersonWidget(nameController: _nameController),
+          PersonListWidget(
+            foodControllers: _foodControllers,
+            quantityControllers: _quantityControllers,
+            priceControllers: _priceControllers,
+          ),
+        ],
+      ),
     );
   }
 }

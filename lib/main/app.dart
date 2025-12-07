@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     return AdaptiveTheme(
       light: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.light,
         colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: Colors.teal,
@@ -22,8 +23,9 @@ class App extends StatelessWidget {
           onError: Colors.white,
           surface: Colors.teal.shade50,
           onSurface: Colors.black,
+          surfaceContainer: Colors.white,
+          outline: Colors.black12,
         ),
-        brightness: Brightness.light,
       ),
       dark: ThemeData(
         useMaterial3: true,
@@ -38,6 +40,8 @@ class App extends StatelessWidget {
           onError: Colors.white,
           surface: Colors.teal.shade900,
           onSurface: Colors.white,
+          surfaceContainer: Colors.black,
+          outline: Colors.white12,
         ),
       ),
       initial: AdaptiveThemeMode.light,
