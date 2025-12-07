@@ -12,14 +12,32 @@ class App extends StatelessWidget {
     return AdaptiveTheme(
       light: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.teal,
+          onPrimary: Colors.white,
+          secondary: Colors.indigo,
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
+          surface: Colors.teal.shade50,
+          onSurface: Colors.black,
+        ),
         brightness: Brightness.light,
       ),
       dark: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.teal,
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme(
           brightness: Brightness.dark,
+          primary: Colors.teal,
+          onPrimary: Colors.white,
+          secondary: Colors.indigo,
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
+          surface: Colors.teal.shade900,
+          onSurface: Colors.white,
         ),
       ),
       initial: AdaptiveThemeMode.light,

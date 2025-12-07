@@ -43,22 +43,16 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               width: double.infinity,
-              child: ElevatedButton.icon(
+              child: FilledButton(
                 onPressed: () {
                   context.router.pushPath('/split');
                 },
-                icon: const Icon(Icons.attach_money_outlined),
-                label: const Text(
-                  'Split Bill Now',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                style: FilledButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  textStyle: theme.textTheme.titleMedium,
                 ),
+                child: Text("Split Bill"),
               ),
             ),
           ),
