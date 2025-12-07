@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:numeru/presentation/screen/split/widgets/bill_setting_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_widget.dart';
+import 'package:numeru/presentation/screen/split/widgets/summary_button_widget.dart';
 
 class SplitScreen extends StatefulWidget {
   const SplitScreen({super.key});
@@ -42,6 +44,8 @@ class _SplitScreenState extends State<SplitScreen> {
             quantityControllers: _quantityControllers,
             priceControllers: _priceControllers,
           ),
+          BillSettingWidget(),
+          SummaryButtonWidget(),
         ],
       ),
     );

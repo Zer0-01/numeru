@@ -32,3 +32,30 @@ class OnAddFoodEvent extends SplitEvent {
   @override
   List<Object> get props => [personId, name, cost, quantity];
 }
+
+class OnChangedIncludeSstEvent extends SplitEvent {
+  const OnChangedIncludeSstEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class OnChangedHaveServiceChargeEvent extends SplitEvent {
+  const OnChangedHaveServiceChargeEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class OnPressedSummaryEvent extends SplitEvent {
+  final double serviceCharge;
+  final double totalBill;
+
+  const OnPressedSummaryEvent({
+    required this.serviceCharge,
+    required this.totalBill,
+  });
+
+  @override
+  List<Object> get props => [serviceCharge, totalBill];
+}

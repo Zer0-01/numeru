@@ -9,6 +9,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
   SplitBloc() : super(SplitState()) {
     on<OnAddPersonEvent>(_onAddPersonEvent);
     on<OnAddFoodEvent>(_onAddFoodEvent);
+    on<OnChangedIncludeSstEvent>(_onChangedIncludeSstEvent);
+    on<OnChangedHaveServiceChargeEvent>(_onChangedHaveServiceChargeEvent);
+    on<OnPressedSummaryEvent>(_onPressedSummaryEvent);
   }
 
   void _onAddPersonEvent(OnAddPersonEvent event, Emitter<SplitState> emit) {
@@ -48,4 +51,23 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
     emit(state.copyWith(persons: updatedPersons));
   }
+
+  void _onChangedIncludeSstEvent(
+    OnChangedIncludeSstEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    emit(state.copyWith(isIncludeSst: !state.isIncludeSst));
+  }
+
+  void _onChangedHaveServiceChargeEvent(
+    OnChangedHaveServiceChargeEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    emit(state.copyWith(isHaveServiceCharge: !state.isHaveServiceCharge));
+  }
+
+  void _onPressedSummaryEvent(
+    OnPressedSummaryEvent event,
+    Emitter<SplitState> emit,
+  ) {}
 }

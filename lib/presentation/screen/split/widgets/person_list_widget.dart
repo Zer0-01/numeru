@@ -90,14 +90,14 @@ class PersonListWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: AppTextFieldWidget(
-                              controller: priceController,
-                              label: "Cost",
+                              controller: quantityController,
+                              label: "Qty",
                             ),
                           ),
                           Expanded(
                             child: AppTextFieldWidget(
-                              controller: quantityController,
-                              label: "Qty",
+                              controller: priceController,
+                              label: "Cost",
                             ),
                           ),
                         ],
@@ -125,13 +125,37 @@ class PersonListWidget extends StatelessWidget {
                           child: Text("Add Food"),
                         ),
                       ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Text(person.foods[index].name);
-                        },
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: person.foods.length,
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: context.colorScheme.surfaceContainerLow,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Expanded(child: Text(person.foods[index].name)),
+                                Expanded(
+                                  child: Text(
+                                    person.foods[index].quantity.toString(),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "RM ${person.foods[index].price.toStringAsFixed(2)}",
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          separatorBuilder:
+                              (context, index) =>
+                                  Divider(color: context.colorScheme.outline),
+                          itemCount: person.foods.length,
+                        ),
                       ),
                     ],
                   );
