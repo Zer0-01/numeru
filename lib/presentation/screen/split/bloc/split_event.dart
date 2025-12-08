@@ -82,3 +82,13 @@ class OnDeletePersonEvent extends SplitEvent {
   @override
   List<Object> get props => [personId];
 }
+
+class OnDeleteFoodEvent extends SplitEvent {
+  final int personId;
+  final int foodId;
+
+  const OnDeleteFoodEvent({required this.personId, required this.foodId});
+
+  @override
+  List<Object> get props => [personId, foodId];
+}

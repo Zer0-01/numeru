@@ -4,6 +4,7 @@ import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
+import 'package:numeru/presentation/screen/split/widgets/delete_food_dialog_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/delete_person_dialog.dart';
 import 'package:numeru/util/common_functions.dart';
 
@@ -188,6 +189,27 @@ class PersonListWidget extends StatelessWidget {
                                     child: Text(
                                       "RM ${person.foods[index].price.toStringAsFixed(2)}",
                                     ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final isDelete = await showDialog<bool>(
+                                        context: context,
+                                        builder:
+                                            (context) =>
+                                                DeleteFoodDialogWidget(),
+                                      );
+
+                                      if (isDelete == true) {
+                                        if (!context.mounted) return;
+                                        context.read<SplitBloc>().add(
+                                          OnDeleteFoodEvent(
+                                            personId: person.id,
+                                            foodId: person.foods[index].id,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    icon: Icon(Icons.delete),
                                   ),
                                 ],
                               );

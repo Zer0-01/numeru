@@ -18,6 +18,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnChangedHaveRoundingEvent>(_onChangedHaveRoundingEvent);
     on<OnChangedRoundingTypeEvent>(_onChangedRoundingTypeEvent);
     on<OnDeletePersonEvent>(_onDeletePersonEvent);
+    on<OnDeleteFoodEvent>(_onDeleteFoodEvent);
   }
 
   void _onAddPersonEvent(OnAddPersonEvent event, Emitter<SplitState> emit) {
@@ -144,6 +145,19 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     Emitter<SplitState> emit,
   ) {
     final updated = state.persons.where((p) => p.id != event.personId).toList();
+    emit(state.copyWith(persons: updated));
+  }
+
+  void _onDeleteFoodEvent(OnDeleteFoodEvent event, Emitter<SplitState> emit) {
+    final updated =
+        state.persons.map((p) {
+          if (p.id == event.personId) {
+            final updatedFoods =
+                p.foods.where((f) => f.id != event.foodId).toList();
+            return PersonModel(id: p.id, name: p.name, foods: updatedFoods);
+          }
+          return p;
+        }).toList();
     emit(state.copyWith(persons: updated));
   }
 }
