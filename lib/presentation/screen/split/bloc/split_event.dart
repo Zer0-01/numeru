@@ -73,3 +73,12 @@ class OnChangedRoundingTypeEvent extends SplitEvent {
   @override
   List<Object> get props => [];
 }
+
+class OnDeletePersonEvent extends SplitEvent {
+  final int personId;
+
+  const OnDeletePersonEvent({required this.personId});
+
+  @override
+  List<Object> get props => [personId];
+}

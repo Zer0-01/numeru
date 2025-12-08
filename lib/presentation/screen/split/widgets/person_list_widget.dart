@@ -4,6 +4,7 @@ import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
+import 'package:numeru/presentation/screen/split/widgets/delete_person_dialog.dart';
 import 'package:numeru/util/common_functions.dart';
 
 class PersonListWidget extends StatelessWidget {
@@ -78,7 +79,19 @@ class PersonListWidget extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final isDelete = await showDialog<bool>(
+                                context: context,
+                                builder: (context) => DeletePersonDialog(),
+                              );
+
+                              if (isDelete == true) {
+                                if (!context.mounted) return;
+                                context.read<SplitBloc>().add(
+                                  OnDeletePersonEvent(personId: person.id),
+                                );
+                              }
+                            },
                             icon: Icon(Icons.delete),
                           ),
                         ],

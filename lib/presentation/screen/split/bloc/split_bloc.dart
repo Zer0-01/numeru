@@ -17,6 +17,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnPressedSummaryEvent>(_onPressedSummaryEvent);
     on<OnChangedHaveRoundingEvent>(_onChangedHaveRoundingEvent);
     on<OnChangedRoundingTypeEvent>(_onChangedRoundingTypeEvent);
+    on<OnDeletePersonEvent>(_onDeletePersonEvent);
   }
 
   void _onAddPersonEvent(OnAddPersonEvent event, Emitter<SplitState> emit) {
@@ -136,5 +137,13 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
                 : RoundingTypeEnum.up,
       ),
     );
+  }
+
+  void _onDeletePersonEvent(
+    OnDeletePersonEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    final updated = state.persons.where((p) => p.id != event.personId).toList();
+    emit(state.copyWith(persons: updated));
   }
 }
