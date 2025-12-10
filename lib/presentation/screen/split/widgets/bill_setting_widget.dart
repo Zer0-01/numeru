@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:numeru/constant/constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
@@ -68,43 +67,7 @@ class BillSettingWidget extends StatelessWidget {
                         decimal: true,
                       ),
                     ),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Expanded(child: Text("Rounding")),
-                      Switch.adaptive(
-                        value: state.isHaveRounding,
-                        onChanged: (_) {
-                          context.read<SplitBloc>().add(
-                            OnChangedHaveRoundingEvent(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  if (state.isHaveRounding)
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            context.read<SplitBloc>().add(
-                              OnChangedRoundingTypeEvent(),
-                            );
-                          },
-                          icon: Icon(
-                            state.roundingType == RoundingTypeEnum.up
-                                ? Icons.add
-                                : Icons.remove,
-                          ),
-                        ),
-                        Expanded(
-                          child: AppTextFieldWidget(
-                            controller: roundingController,
-                            label: "Rounding",
-                          ),
-                        ),
-                      ],
-                    ),
+
                   Row(
                     spacing: 4,
                     children: [

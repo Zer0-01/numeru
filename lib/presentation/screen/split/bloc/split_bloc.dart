@@ -1,7 +1,5 @@
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:numeru/constant/constant.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/data/models/summary_model.dart';
 
@@ -15,8 +13,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnChangedIncludeSstEvent>(_onChangedIncludeSstEvent);
     on<OnChangedHaveServiceChargeEvent>(_onChangedHaveServiceChargeEvent);
     on<OnPressedSummaryEvent>(_onPressedSummaryEvent);
-    on<OnChangedHaveRoundingEvent>(_onChangedHaveRoundingEvent);
-    on<OnChangedRoundingTypeEvent>(_onChangedRoundingTypeEvent);
+
     on<OnDeletePersonEvent>(_onDeletePersonEvent);
     on<OnDeleteFoodEvent>(_onDeleteFoodEvent);
   }
@@ -77,65 +74,76 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     OnPressedSummaryEvent event,
     Emitter<SplitState> emit,
   ) {
-    debugPrint("Oi");
-    final service =
-        state.isHaveServiceCharge
-            ? event.serviceCharge / state.persons.length
-            : 0;
-    final List<SummaryPerson> summary = [];
+    emit(state.copyWith(splitStatus: SplitStatus.loading));
+
+    final bool includeSst = state.isIncludeSst;
+    final bool haveService = state.isHaveServiceCharge;
+
+    final double serviceChargeTotal = event.serviceCharge;
+
+    final int totalPersons = state.persons.length;
+    final double serviceChargePerPerson =
+        haveService ? serviceChargeTotal / totalPersons : 0;
+
+    final List<SummaryPerson> summaryList = [];
+    double totalBill = event.totalBill;
+    double totalSst = 0;
+
     for (var p in state.persons) {
-      double total = 0;
+      List<SummaryFood> foods = [];
+      double personSubtotal = 0;
+      double personSstTotal = 0;
+
       for (var f in p.foods) {
-        if (state.isIncludeSst) {
-          total += ((f.price + 0.06) + f.price);
-        } else {
-          total += f.price;
-        }
+        double sst = includeSst ? (f.price * 0.06) : 0;
+        double priceWithSst = f.price + sst;
+        double totalFoodPrice = priceWithSst * f.quantity;
+
+        personSubtotal += totalFoodPrice;
+        personSstTotal += sst * f.quantity;
+
+        foods.add(
+          SummaryFood(
+            id: f.id,
+            name: f.name,
+            quantity: f.quantity,
+            basePrice: f.price,
+            sst: sst,
+            priceWithSst: priceWithSst,
+          ),
+        );
       }
 
-      if (state.isHaveServiceCharge) {
-        debugPrint(service.toString());
-        total += service;
+      if (haveService) {
+        personSubtotal += serviceChargePerPerson;
       }
 
-      debugPrint(total.toString());
+      totalSst += personSstTotal;
 
-      final SummaryPerson summaryPerson = SummaryPerson(
-        id: p.id,
-        name: p.name,
-        total: total,
+      summaryList.add(
+        SummaryPerson(
+          id: p.id,
+          name: p.name,
+          totalNeedToPay: personSubtotal,
+          foods: foods,
+          totalServiceCharge: serviceChargePerPerson,
+          totalSst: personSstTotal,
+        ),
       );
-
-      summary.add(summaryPerson);
     }
 
     final SummaryModel summaryModel = SummaryModel(
-      persons: state.persons.length,
-      total: event.totalBill,
-      summary: summary,
-      serviceCharge: event.serviceCharge,
+      persons: totalPersons,
+      total: totalBill,
+      totalServiceCharge: serviceChargeTotal,
+      summaryPerson: summaryList,
+      totalSst: totalSst,
     );
 
-    emit(state.copyWith(summaryModel: summaryModel));
-  }
-
-  void _onChangedHaveRoundingEvent(
-    OnChangedHaveRoundingEvent event,
-    Emitter<SplitState> emit,
-  ) {
-    emit(state.copyWith(isHaveRounding: !state.isHaveRounding));
-  }
-
-  void _onChangedRoundingTypeEvent(
-    OnChangedRoundingTypeEvent event,
-    Emitter<SplitState> emit,
-  ) {
     emit(
       state.copyWith(
-        roundingType:
-            state.roundingType == RoundingTypeEnum.up
-                ? RoundingTypeEnum.down
-                : RoundingTypeEnum.up,
+        splitStatus: SplitStatus.success,
+        summaryModel: summaryModel,
       ),
     );
   }

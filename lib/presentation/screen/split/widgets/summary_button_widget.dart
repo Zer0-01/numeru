@@ -18,7 +18,6 @@ class SummaryButtonWidget extends StatelessWidget {
   bool _getIsButtonEnabled(
     List<PersonModel> persons,
     bool isHaveServiceCharge,
-    bool isHaveRounding,
   ) {
     // Must have at least 1 person
     if (persons.isEmpty) return false;
@@ -32,11 +31,6 @@ class SummaryButtonWidget extends StatelessWidget {
 
     // If service charge required → must not be empty
     if (isHaveServiceCharge && serviceChargeController.text.trim().isEmpty) {
-      return false;
-    }
-
-    // If rounding required → must not be empty
-    if (isHaveRounding && roundingController.text.trim().isEmpty) {
       return false;
     }
 
@@ -56,7 +50,6 @@ class SummaryButtonWidget extends StatelessWidget {
                     _getIsButtonEnabled(
                           state.persons,
                           state.isHaveServiceCharge,
-                          state.isHaveRounding,
                         )
                         ? () {
                           debugPrint("Helo");

@@ -60,20 +60,6 @@ class OnPressedSummaryEvent extends SplitEvent {
   List<Object> get props => [serviceCharge, totalBill];
 }
 
-class OnChangedHaveRoundingEvent extends SplitEvent {
-  const OnChangedHaveRoundingEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class OnChangedRoundingTypeEvent extends SplitEvent {
-  const OnChangedRoundingTypeEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
 class OnDeletePersonEvent extends SplitEvent {
   final int personId;
 
