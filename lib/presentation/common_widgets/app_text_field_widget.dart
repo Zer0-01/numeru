@@ -11,6 +11,8 @@ class AppTextFieldWidget extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final Widget? prefixIcon;
   final BoxConstraints? prefixIconConstraints;
+  final bool? filled;
+  final Color? fillColor;
 
   const AppTextFieldWidget({
     super.key,
@@ -24,6 +26,8 @@ class AppTextFieldWidget extends StatelessWidget {
     this.onChanged,
     this.prefixIcon,
     this.prefixIconConstraints,
+    this.filled,
+    this.fillColor,
   });
 
   @override
@@ -38,7 +42,10 @@ class AppTextFieldWidget extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       decoration: InputDecoration(
+        filled: filled,
+        fillColor: fillColor,
         labelText: label,
+
         hintText: hint,
         isDense: true,
         prefixIcon: prefixIcon,
@@ -46,7 +53,7 @@ class AppTextFieldWidget extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: theme.colorScheme.outline),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

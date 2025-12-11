@@ -1,16 +1,34 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/constant/constant.dart';
-import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
+import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/router/app_router.gr.dart';
+import 'package:numeru/util/common_functions.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  String _getFeatureTitle(String feature) {
+    switch (feature) {
+      case FeatureConstant.split:
+        return 'Split';
+      default:
+        return "Coming Soon";
+    }
+  }
+
+  void Function()? _getoOnTapFeature(BuildContext context, String feature) {
+    switch (feature) {
+      case FeatureConstant.split:
+        return () => AutoRouter.of(context).push(const SplitSetupRoute());
+      default:
+        return () =>
+            showErrorToast(context, "Feature Not Available", "Coming Soon");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -24,99 +42,77 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Numeru',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                Text(
-                  'All your daily calculations, simplified.',
-                  style: theme.textTheme.titleMedium,
-                ),
-              ],
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
+              horizontal: 24.0,
               vertical: 4.0,
             ),
-            child: AppTextFieldWidget(),
+            child: TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                isDense: true,
+                fillColor: context.colorScheme.primaryContainer,
+                hintText: "Search tools...",
+                hintStyle: TextStyle(
+                  color: context.colorScheme.onPrimaryContainer,
+                ),
+
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: context.colorScheme.primary),
+                ),
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
             child: GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 0.8,
+                crossAxisCount: 3,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 1,
               ),
               itemCount: FeatureEnum.values.length,
               itemBuilder: (context, index) {
                 final feature = FeatureEnum.values[index];
 
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // 🔹 ICON CONTAINER (gradient)
-                    Expanded(
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(16),
-                        onTap: () {
-                          context.router.push(SplitSetupRoute());
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: feature.gradient,
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: feature.gradient.first.withValues(
-                                  alpha: 0.3,
-                                ),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
+                return InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: _getoOnTapFeature(context, feature.name),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: context.colorScheme.surfaceContainerLowest,
+                    ),
+                    child: Column(
+                      spacing: 8,
+                      children: [
+                        Expanded(
                           child: Icon(
                             feature.icon,
-                            color: Colors.white,
-                            size: 28,
+                            color: context.colorScheme.primary,
                           ),
                         ),
-                      ),
+                        Expanded(
+                          child: Text(
+                            _getFeatureTitle(feature.name),
+                            style: TextStyle(),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
-
-                    const SizedBox(height: 6),
-
-                    // 🔹 TEXT OUTSIDE CONTAINER
-                    Text(
-                      feature.name,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey.shade900,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                  ),
                 );
               },
             ),
