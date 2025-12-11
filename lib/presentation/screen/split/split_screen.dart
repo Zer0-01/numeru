@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/screen/split/widgets/bill_setting_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_widget.dart';
@@ -55,7 +57,18 @@ class _SplitScreenState extends State<SplitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Split"), centerTitle: true, elevation: 2),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => context.router.maybePop(),
+          icon: Icon(Icons.chevron_left, color: context.colorScheme.onPrimary),
+        ),
+        title: Text(
+          "Split",
+          style: TextStyle(color: context.colorScheme.onPrimary),
+        ),
+        centerTitle: true,
+        backgroundColor: context.colorScheme.primaryFixed,
+      ),
       body: CustomScrollView(
         slivers: [
           PersonWidget(nameController: _nameController),

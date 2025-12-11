@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 import 'package:numeru/presentation/screen/split/widgets/delete_food_dialog_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/delete_person_dialog.dart';
@@ -38,13 +37,13 @@ class PersonListWidget extends StatelessWidget {
         }
 
         return SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           sliver: SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: context.colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(8),
+                color: context.colorScheme.surfaceContainerLowest,
+                borderRadius: BorderRadius.circular(16),
               ),
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
@@ -102,24 +101,87 @@ class PersonListWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: AppTextFieldWidget(
+                            child: TextFormField(
                               controller: foodController,
-                              label: "Food Name",
+                              decoration: InputDecoration(
+                                filled: true,
+                                isDense: true,
+                                fillColor: context.colorScheme.primaryContainer,
+                                hintText: "Food Name",
+                                hintStyle: TextStyle(
+                                  color: context.colorScheme.onPrimaryContainer,
+                                ),
+
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: context.colorScheme.primary,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
-                            child: AppTextFieldWidget(
+                            child: TextFormField(
                               controller: quantityController,
-                              label: "Qty",
                               keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                isDense: true,
+                                fillColor: context.colorScheme.primaryContainer,
+                                hintText: "Qty",
+                                hintStyle: TextStyle(
+                                  color: context.colorScheme.onPrimaryContainer,
+                                ),
+
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: context.colorScheme.primary,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
-                            child: AppTextFieldWidget(
+                            child: TextFormField(
                               controller: priceController,
-                              label: "Cost",
                               keyboardType: TextInputType.numberWithOptions(
                                 decimal: true,
+                              ),
+                              decoration: InputDecoration(
+                                filled: true,
+                                isDense: true,
+                                fillColor: context.colorScheme.primaryContainer,
+                                hintText: "Price",
+                                hintStyle: TextStyle(
+                                  color: context.colorScheme.onPrimaryContainer,
+                                ),
+
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide(
+                                    color: context.colorScheme.primary,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -158,7 +220,7 @@ class PersonListWidget extends StatelessWidget {
                           },
                           style: FilledButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(16),
                             ),
                           ),
                           child: Text("Add Food"),
@@ -166,10 +228,10 @@ class PersonListWidget extends StatelessWidget {
                       ),
                       if (person.foods.isNotEmpty)
                         Container(
-                          padding: EdgeInsets.all(8),
+                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: context.colorScheme.surfaceContainerLow,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           child: ListView.separated(
                             shrinkWrap: true,
@@ -182,7 +244,7 @@ class PersonListWidget extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      person.foods[index].quantity.toString(),
+                                      "x${person.foods[index].quantity.toString()}",
                                     ),
                                   ),
                                   Expanded(
@@ -215,8 +277,9 @@ class PersonListWidget extends StatelessWidget {
                               );
                             },
                             separatorBuilder:
-                                (context, index) =>
-                                    Divider(color: context.colorScheme.outline),
+                                (context, index) => Divider(
+                                  color: context.colorScheme.surfaceContainer,
+                                ),
                             itemCount: person.foods.length,
                           ),
                         ),
@@ -225,7 +288,7 @@ class PersonListWidget extends StatelessWidget {
                 },
                 separatorBuilder:
                     (context, index) =>
-                        Divider(color: context.colorScheme.outline),
+                        Divider(color: context.colorScheme.surfaceContainer),
               ),
             ),
           ),

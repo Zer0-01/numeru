@@ -7,9 +7,10 @@ class DeletePersonDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: context.colorScheme.surfaceContainerLowest,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           spacing: 8,
           mainAxisSize: MainAxisSize.min,
@@ -31,15 +32,14 @@ class DeletePersonDialog extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     style: FilledButton.styleFrom(
-                      backgroundColor:
-                          context.colorScheme.surfaceContainerHighest,
+                      backgroundColor: context.colorScheme.surfaceContainerLow,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: Text(
                       "Cancel",
-                      style: TextStyle(color: context.colorScheme.onSurface),
+                      style: TextStyle(color: context.colorScheme.primary),
                     ),
                   ),
                 ),
@@ -51,7 +51,7 @@ class DeletePersonDialog extends StatelessWidget {
                     style: FilledButton.styleFrom(
                       backgroundColor: context.colorScheme.primary,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: Text("Delete"),

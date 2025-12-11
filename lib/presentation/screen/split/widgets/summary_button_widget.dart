@@ -42,7 +42,12 @@ class SummaryButtonWidget extends StatelessWidget {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.all(8),
+          padding: EdgeInsetsGeometry.only(
+            left: 16,
+            top: 8,
+            right: 16,
+            bottom: 16,
+          ),
           sliver: SliverToBoxAdapter(
             child: SafeArea(
               child: FilledButton(
@@ -69,7 +74,7 @@ class SummaryButtonWidget extends StatelessWidget {
                         : null,
                 style: FilledButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 child: Text("Summary"),

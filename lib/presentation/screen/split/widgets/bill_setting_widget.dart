@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 
 class BillSettingWidget extends StatelessWidget {
@@ -20,13 +19,13 @@ class BillSettingWidget extends StatelessWidget {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 8, vertical: 4),
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 8),
           sliver: SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: context.colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(8),
+                color: context.colorScheme.surfaceContainerLowest,
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 spacing: 8,
@@ -42,6 +41,7 @@ class BillSettingWidget extends StatelessWidget {
                             OnChangedIncludeSstEvent(),
                           );
                         },
+                        activeTrackColor: context.colorScheme.primary,
                       ),
                     ],
                   ),
@@ -56,15 +56,31 @@ class BillSettingWidget extends StatelessWidget {
                             OnChangedHaveServiceChargeEvent(),
                           );
                         },
+                        activeTrackColor: context.colorScheme.primary,
                       ),
                     ],
                   ),
                   if (state.isHaveServiceCharge)
-                    AppTextFieldWidget(
+                    TextFormField(
                       controller: serviceChargeController,
-                      label: "Service Charge",
-                      keyboardType: TextInputType.numberWithOptions(
-                        decimal: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        isDense: true,
+                        fillColor: context.colorScheme.primaryContainer,
+                        hintText: "Service Charge",
+                        hintStyle: TextStyle(
+                          color: context.colorScheme.onPrimaryContainer,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(
+                            color: context.colorScheme.primary,
+                          ),
+                        ),
                       ),
                     ),
 
@@ -73,8 +89,24 @@ class BillSettingWidget extends StatelessWidget {
                     children: [
                       Expanded(child: Text("Total Bill")),
                       Expanded(
-                        child: AppTextFieldWidget(
+                        child: TextFormField(
                           controller: totalBillController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            isDense: true,
+                            fillColor: context.colorScheme.primaryContainer,
+
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(
+                                color: context.colorScheme.primary,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],

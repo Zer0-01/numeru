@@ -18,7 +18,8 @@ class App extends StatelessWidget {
           primary: Colors.brown,
           onPrimary: Colors.white,
           primaryContainer: Colors.brown.shade100,
-          onPrimaryContainer: Colors.brown.shade200,
+          onPrimaryContainer: Colors.grey,
+          primaryFixed: Colors.brown.shade300,
           secondary: Colors.indigo,
           onSecondary: Colors.white,
           error: Colors.red,
@@ -28,7 +29,6 @@ class App extends StatelessWidget {
           surfaceContainerLow: Colors.grey.shade200,
           surfaceContainerHigh: Colors.grey.shade700,
           surfaceContainerHighest: Colors.black,
-
           surface: Colors.brown.shade50,
           onSurface: Colors.black,
         ),
