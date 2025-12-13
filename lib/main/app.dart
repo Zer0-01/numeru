@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:numeru/router/app_router.dart';
 
 class App extends StatelessWidget {
@@ -13,6 +14,7 @@ class App extends StatelessWidget {
       light: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
+        fontFamily: GoogleFonts.sourceSans3().fontFamily,
         colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: Colors.brown,
