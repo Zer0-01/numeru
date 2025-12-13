@@ -15,6 +15,8 @@ SummaryModel _$SummaryModelFromJson(Map<String, dynamic> json) => SummaryModel(
           .map((e) => SummaryPerson.fromJson(e as Map<String, dynamic>))
           .toList(),
   totalSst: (json['totalSst'] as num).toDouble(),
+  isIncludeSst: json['isIncludeSst'] as bool,
+  isHaveServiceCharge: json['isHaveServiceCharge'] as bool,
 );
 
 Map<String, dynamic> _$SummaryModelToJson(SummaryModel instance) =>
@@ -24,6 +26,8 @@ Map<String, dynamic> _$SummaryModelToJson(SummaryModel instance) =>
       'totalServiceCharge': instance.totalServiceCharge,
       'summaryPerson': instance.summaryPerson,
       'totalSst': instance.totalSst,
+      'isIncludeSst': instance.isIncludeSst,
+      'isHaveServiceCharge': instance.isHaveServiceCharge,
     };
 
 SummaryPerson _$SummaryPersonFromJson(Map<String, dynamic> json) =>

@@ -9,6 +9,8 @@ class SummaryModel {
   final double totalServiceCharge;
   final List<SummaryPerson> summaryPerson;
   final double totalSst;
+  final bool isIncludeSst;
+  final bool isHaveServiceCharge;
 
   SummaryModel({
     required this.persons,
@@ -16,6 +18,8 @@ class SummaryModel {
     required this.totalServiceCharge,
     required this.summaryPerson,
     required this.totalSst,
+    required this.isIncludeSst,
+    required this.isHaveServiceCharge,
   });
 
   factory SummaryModel.fromJson(Map<String, dynamic> json) =>

@@ -138,6 +138,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       totalServiceCharge: serviceChargeTotal,
       summaryPerson: summaryList,
       totalSst: totalSst,
+      isIncludeSst: includeSst,
+      isHaveServiceCharge: haveService,
     );
 
     emit(
