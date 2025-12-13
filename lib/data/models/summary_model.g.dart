@@ -46,25 +46,25 @@ SummaryPerson _$SummaryPersonFromJson(Map<String, dynamic> json) =>
     SummaryPerson(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      needToPay: (json['totalNeedToPay'] as num).toDouble(),
+      needToPay: (json['needToPay'] as num).toDouble(),
       foods:
           (json['foods'] as List<dynamic>)
               .map((e) => SummaryFood.fromJson(e as Map<String, dynamic>))
               .toList(),
-      serviceCharge: (json['totalServiceCharge'] as num).toDouble(),
-      sst: (json['totalSst'] as num).toDouble(),
-      subtotal: (json['totalSubtotal'] as num).toDouble(),
+      serviceCharge: (json['serviceCharge'] as num).toDouble(),
+      sst: (json['sst'] as num).toDouble(),
+      subtotal: (json['subtotal'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$SummaryPersonToJson(SummaryPerson instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'totalNeedToPay': instance.needToPay,
-      'totalServiceCharge': instance.serviceCharge,
-      'totalSst': instance.sst,
+      'needToPay': instance.needToPay,
+      'serviceCharge': instance.serviceCharge,
+      'sst': instance.sst,
       'foods': instance.foods,
-      'totalSubtotal': instance.subtotal,
+      'subtotal': instance.subtotal,
     };
 
 SummaryFood _$SummaryFoodFromJson(Map<String, dynamic> json) => SummaryFood(

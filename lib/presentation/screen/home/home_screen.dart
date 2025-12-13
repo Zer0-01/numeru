@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/screen/home/widgets/feature_grid_widget.dart';
 import 'package:numeru/presentation/screen/home/widgets/search_text_field_widget.dart';
+import 'package:numeru/router/app_router.gr.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,8 +14,14 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => context.router.push(SettingsSetupRoute()),
+            icon: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: Icon(
+                Icons.settings_outlined,
+                color: context.colorScheme.primary,
+              ),
+            ),
           ),
         ],
       ),

@@ -10,5 +10,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: HomeSetupRoute.page, path: '/', initial: true),
     AutoRoute(page: SplitSetupRoute.page, path: '/split'),
     AutoRoute(page: SplitSummarySetupRoute.page, path: '/summary'),
+    AutoRoute(page: SettingsSetupRoute.page, path: '/settings'),
+    AutoRoute(page: LanguageSetupRoute.page, path: '/language'),
   ];
 }

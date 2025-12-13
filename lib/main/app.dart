@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:numeru/l10n/app_localizations.dart';
 import 'package:numeru/router/app_router.dart';
 
 class App extends StatelessWidget {
@@ -17,11 +18,11 @@ class App extends StatelessWidget {
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
         colorScheme: ColorScheme(
           brightness: Brightness.light,
-          primary: Colors.brown,
+          primary: Colors.pink.shade800,
           onPrimary: Colors.white,
-          primaryContainer: Colors.brown.shade100,
+          primaryContainer: Colors.pink.shade50,
           onPrimaryContainer: Colors.grey,
-          primaryFixed: Colors.brown.shade300,
+          primaryFixed: Colors.pink.shade200,
           secondary: Colors.indigo,
           onSecondary: Colors.white,
           error: Colors.red,
@@ -31,7 +32,7 @@ class App extends StatelessWidget {
           surfaceContainerLow: Colors.grey.shade200,
           surfaceContainerHigh: Colors.grey.shade700,
           surfaceContainerHighest: Colors.black,
-          surface: Colors.brown.shade50,
+          surface: Colors.grey.shade100,
           onSurface: Colors.black,
         ),
       ),
@@ -63,6 +64,8 @@ class App extends StatelessWidget {
             routerConfig: _appRouter.config(),
             theme: light,
             darkTheme: dark,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
     );
   }

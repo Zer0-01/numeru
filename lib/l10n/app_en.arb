@@ -1,0 +1,11 @@
+{
+    "@@locale": "en",
+    "coming_soon": "Coming Soon",
+    "@coming_soon": {},
+    "settings": "Settings",
+    "@settings": {},
+    "language": "Language",
+    "@language": {},
+    "done": "Done",
+    "@done": {}
+}

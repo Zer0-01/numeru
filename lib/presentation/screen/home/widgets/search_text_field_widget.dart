@@ -12,9 +12,9 @@ class SearchTextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           filled: true,
           isDense: true,
-          fillColor: context.colorScheme.primaryContainer,
+          fillColor: context.colorScheme.surfaceContainerLow,
           hintText: "Search tools...",
-          hintStyle: TextStyle(color: context.colorScheme.onPrimaryContainer),
+          hintStyle: TextStyle(color: context.colorScheme.surfaceContainer),
 
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),

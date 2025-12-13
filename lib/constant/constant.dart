@@ -22,6 +22,16 @@ class FeatureIconConstant {
   static const IconData currencyIcon = Icons.currency_exchange;
 }
 
+class LocaleConstant {
+  static const String en = 'en';
+  static const String ms = 'ms';
+}
+
+class LocaleNameConstant {
+  static const String en = 'English';
+  static const String ms = 'Bahasa Melayu';
+}
+
 enum FeatureEnum {
   split(FeatureConstant.split, icon: FeatureIconConstant.splitIcon),
   loan(FeatureConstant.loan, icon: FeatureIconConstant.loanIcon),
@@ -33,4 +43,14 @@ enum FeatureEnum {
   final String name;
   final IconData icon;
   const FeatureEnum(this.name, {required this.icon});
+}
+
+enum LocaleEnum {
+  en(LocaleConstant.en, LocaleNameConstant.en),
+  ms(LocaleConstant.ms, LocaleNameConstant.ms);
+
+  final String value;
+  final String title;
+
+  const LocaleEnum(this.value, this.title);
 }

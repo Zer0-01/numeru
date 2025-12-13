@@ -2,18 +2,19 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/constant/constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
+import 'package:numeru/l10n/app_localizations.dart';
 import 'package:numeru/router/app_router.gr.dart';
 import 'package:numeru/util/common_functions.dart';
 
 class FeatureGridWidget extends StatelessWidget {
   const FeatureGridWidget({super.key});
 
-  String _getFeatureTitle(String feature) {
+  String _getFeatureTitle(BuildContext context, String feature) {
     switch (feature) {
       case FeatureConstant.split:
         return 'Split';
       default:
-        return "Coming Soon";
+        return AppLocalizations.of(context)!.coming_soon;
     }
   }
 
@@ -65,7 +66,7 @@ class FeatureGridWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      _getFeatureTitle(feature.name),
+                      _getFeatureTitle(context, feature.name),
                       style: TextStyle(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
