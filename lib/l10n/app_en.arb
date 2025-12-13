@@ -7,5 +7,7 @@
     "language": "Language",
     "@language": {},
     "done": "Done",
-    "@done": {}
+    "@done": {},
+    "dark_mode": "Dark Mode",
+    "@dark_mode": {}
 }

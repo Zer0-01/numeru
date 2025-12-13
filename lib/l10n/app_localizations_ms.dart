@@ -19,4 +19,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get done => 'Selesai';
+
+  @override
+  String get dark_mode => 'Mod Gelap';
 }
