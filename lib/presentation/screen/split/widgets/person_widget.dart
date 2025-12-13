@@ -30,10 +30,10 @@ class PersonWidget extends StatelessWidget {
                 decoration: InputDecoration(
                   filled: true,
                   isDense: true,
-                  fillColor: context.colorScheme.primaryContainer,
+                  fillColor: context.colorScheme.surfaceContainerLow,
                   hintText: "Name",
                   hintStyle: TextStyle(
-                    color: context.colorScheme.onPrimaryContainer,
+                    color: context.colorScheme.surfaceContainer,
                   ),
 
                   enabledBorder: OutlineInputBorder(

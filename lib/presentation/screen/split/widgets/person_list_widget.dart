@@ -106,10 +106,11 @@ class PersonListWidget extends StatelessWidget {
                               decoration: InputDecoration(
                                 filled: true,
                                 isDense: true,
-                                fillColor: context.colorScheme.primaryContainer,
+                                fillColor:
+                                    context.colorScheme.surfaceContainerLow,
                                 hintText: "Food Name",
                                 hintStyle: TextStyle(
-                                  color: context.colorScheme.onPrimaryContainer,
+                                  color: context.colorScheme.surfaceContainer,
                                 ),
 
                                 enabledBorder: OutlineInputBorder(
@@ -134,10 +135,11 @@ class PersonListWidget extends StatelessWidget {
                               decoration: InputDecoration(
                                 filled: true,
                                 isDense: true,
-                                fillColor: context.colorScheme.primaryContainer,
+                                fillColor:
+                                    context.colorScheme.surfaceContainerLow,
                                 hintText: "Qty",
                                 hintStyle: TextStyle(
-                                  color: context.colorScheme.onPrimaryContainer,
+                                  color: context.colorScheme.surfaceContainer,
                                 ),
 
                                 enabledBorder: OutlineInputBorder(
@@ -164,10 +166,11 @@ class PersonListWidget extends StatelessWidget {
                               decoration: InputDecoration(
                                 filled: true,
                                 isDense: true,
-                                fillColor: context.colorScheme.primaryContainer,
+                                fillColor:
+                                    context.colorScheme.surfaceContainerLow,
                                 hintText: "Price",
                                 hintStyle: TextStyle(
-                                  color: context.colorScheme.onPrimaryContainer,
+                                  color: context.colorScheme.surfaceContainer,
                                 ),
 
                                 enabledBorder: OutlineInputBorder(

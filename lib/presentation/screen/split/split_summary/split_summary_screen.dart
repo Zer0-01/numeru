@@ -15,8 +15,9 @@ class SplitSummaryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Summary"),
-        backgroundColor: context.colorScheme.primaryFixed,
-        foregroundColor: context.colorScheme.onPrimary,
+        backgroundColor: context.colorScheme.surface,
+        foregroundColor: context.colorScheme.onSurface,
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           onPressed: () => context.router.maybePop(),
           icon: Icon(Icons.chevron_left),

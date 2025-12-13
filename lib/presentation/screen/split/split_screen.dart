@@ -60,14 +60,15 @@ class _SplitScreenState extends State<SplitScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => context.router.maybePop(),
-          icon: Icon(Icons.chevron_left, color: context.colorScheme.onPrimary),
+          icon: Icon(Icons.chevron_left, color: context.colorScheme.onSurface),
         ),
         title: Text(
           "Split",
-          style: TextStyle(color: context.colorScheme.onPrimary),
+          style: TextStyle(color: context.colorScheme.onSurface),
         ),
         centerTitle: true,
-        backgroundColor: context.colorScheme.primaryFixed,
+        backgroundColor: context.colorScheme.surface,
+        surfaceTintColor: Colors.transparent,
       ),
       body: CustomScrollView(
         slivers: [

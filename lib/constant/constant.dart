@@ -54,3 +54,5 @@ enum LocaleEnum {
 
   const LocaleEnum(this.value, this.title);
 }
+
+enum SharedPreferencesKey { locale }

@@ -94,7 +94,7 @@ class BillSettingWidget extends StatelessWidget {
                           decoration: InputDecoration(
                             filled: true,
                             isDense: true,
-                            fillColor: context.colorScheme.primaryContainer,
+                            fillColor: context.colorScheme.surfaceContainerLow,
 
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
