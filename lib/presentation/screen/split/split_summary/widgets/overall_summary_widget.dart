@@ -51,19 +51,45 @@ class OverallSummaryWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  _row("Total", state.summaryModel?.total ?? 0),
                   _row(
-                    "Service Charge",
-                    state.summaryModel?.totalServiceCharge ?? 0,
-                  ),
-                  _row("SST", state.summaryModel?.totalSst ?? 0),
-                  const Divider(height: 24),
-                  _row(
-                    "Persons",
+                    "Total Person(s)",
                     state.summaryModel?.persons.toDouble() ?? 0,
                     isMoney: false,
                   ),
+                  _row(
+                    "Total Bill Subtotal",
+                    state.summaryModel?.totalSubtotal ?? 0,
+                  ),
+                  if (state.summaryModel?.isIncludeSst == true)
+                    _row("SST", state.summaryModel?.totalSst ?? 0),
+                  _row(
+                    "Service Charge Input",
+                    state.summaryModel?.totalServiceChargeInput ?? 0,
+                  ),
+                  _row(
+                    "Service Charge Calculate",
+                    state.summaryModel?.totalServiceChargeCalculate ?? 0,
+                  ),
+                  _row(
+                    "Service Charge Difference",
+                    state.summaryModel?.totalServiceChargeDifference ?? 0,
+                  ),
+                  _row(
+                    "Total Bill Input",
+                    state.summaryModel?.totalBillInput ?? 0,
+                  ),
+                  _row(
+                    "Total Bill Calculate",
+                    state.summaryModel?.totalBillCalculate ?? 0,
+                  ),
+
+                  _row(
+                    "Total Bill Difference",
+                    state.summaryModel?.totalBillDifference ?? 0,
+                  ),
+
+                  if (state.summaryModel?.isIncludeSst == true)
+                    _row("SST", state.summaryModel?.totalSst ?? 0),
                 ],
               ),
             ),

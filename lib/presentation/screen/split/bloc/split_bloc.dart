@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:numeru/data/models/person_model.dart';
@@ -79,20 +80,26 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     final bool includeSst = state.isIncludeSst;
     final bool haveService = state.isHaveServiceCharge;
 
-    final double serviceChargeTotal = event.serviceCharge;
+    final double totalServiceChargeInput = event.serviceCharge;
 
     final int totalPersons = state.persons.length;
     final double serviceChargePerPerson =
-        haveService ? serviceChargeTotal / totalPersons : 0;
+        haveService ? totalServiceChargeInput / totalPersons : 0;
+
+    final double totalServiceChargeCalculate =
+        serviceChargePerPerson * totalPersons;
 
     final List<SummaryPerson> summaryList = [];
-    double totalBill = event.totalBill;
+    double totalBillInput = event.totalBill;
     double totalSst = 0;
+    double totalBillCalculate = 0;
+    double totalSubtotal = 0;
 
     for (var p in state.persons) {
       List<SummaryFood> foods = [];
       double personSubtotal = 0;
       double personSstTotal = 0;
+      double personNeedToPay = 0;
 
       for (var f in p.foods) {
         double sst = includeSst ? (f.price * 0.06) : 0;
@@ -114,32 +121,53 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
         );
       }
 
+      personNeedToPay += personSubtotal;
+
       if (haveService) {
-        personSubtotal += serviceChargePerPerson;
+        personNeedToPay += serviceChargePerPerson;
       }
 
       totalSst += personSstTotal;
+      totalBillCalculate += personNeedToPay;
+      totalSubtotal += personSubtotal;
 
       summaryList.add(
         SummaryPerson(
           id: p.id,
           name: p.name,
-          totalNeedToPay: personSubtotal,
+          needToPay: personNeedToPay,
           foods: foods,
-          totalServiceCharge: serviceChargePerPerson,
-          totalSst: personSstTotal,
+          serviceCharge: serviceChargePerPerson,
+          sst: personSstTotal,
+          subtotal: personSubtotal,
         ),
       );
     }
 
+    final double totalBillDifference = totalBillInput - totalBillCalculate;
+    final double serviceChargeDifference =
+        totalServiceChargeInput - totalServiceChargeCalculate;
+
+    debugPrint("total bill input: $totalBillInput");
+    debugPrint("total bill calculate: $totalBillCalculate");
+    debugPrint("total bill difference: $totalBillDifference");
+    debugPrint("total service charge input: $totalServiceChargeInput");
+    debugPrint("total service charge calculate: $totalServiceChargeCalculate");
+    debugPrint("total service charge difference: $serviceChargeDifference");
+
     final SummaryModel summaryModel = SummaryModel(
       persons: totalPersons,
-      total: totalBill,
-      totalServiceCharge: serviceChargeTotal,
+      totalBillInput: totalBillInput,
+      totalServiceChargeInput: totalServiceChargeInput,
       summaryPerson: summaryList,
       totalSst: totalSst,
       isIncludeSst: includeSst,
       isHaveServiceCharge: haveService,
+      totalServiceChargeCalculate: totalServiceChargeCalculate,
+      totalBillCalculate: totalBillCalculate,
+      totalBillDifference: totalBillDifference,
+      totalServiceChargeDifference: serviceChargeDifference,
+      totalSubtotal: totalSubtotal,
     );
 
     emit(

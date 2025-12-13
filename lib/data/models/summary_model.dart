@@ -5,21 +5,31 @@ part 'summary_model.g.dart';
 @JsonSerializable()
 class SummaryModel {
   final int persons;
-  final double total;
-  final double totalServiceCharge;
+  final double totalBillInput;
+  final double totalServiceChargeInput;
   final List<SummaryPerson> summaryPerson;
   final double totalSst;
   final bool isIncludeSst;
   final bool isHaveServiceCharge;
+  final double totalBillCalculate;
+  final double totalServiceChargeCalculate;
+  final double totalBillDifference;
+  final double totalServiceChargeDifference;
+  final double totalSubtotal;
 
   SummaryModel({
     required this.persons,
-    required this.total,
-    required this.totalServiceCharge,
+    required this.totalBillInput,
+    required this.totalServiceChargeInput,
     required this.summaryPerson,
     required this.totalSst,
     required this.isIncludeSst,
     required this.isHaveServiceCharge,
+    required this.totalBillCalculate,
+    required this.totalServiceChargeCalculate,
+    required this.totalBillDifference,
+    required this.totalServiceChargeDifference,
+    required this.totalSubtotal,
   });
 
   factory SummaryModel.fromJson(Map<String, dynamic> json) =>
@@ -32,18 +42,20 @@ class SummaryModel {
 class SummaryPerson {
   final int id;
   final String name;
-  final double totalNeedToPay;
-  final double totalServiceCharge;
-  final double totalSst;
+  final double needToPay;
+  final double serviceCharge;
+  final double sst;
   final List<SummaryFood> foods;
+  final double subtotal;
 
   SummaryPerson({
     required this.id,
     required this.name,
-    required this.totalNeedToPay,
+    required this.needToPay,
     required this.foods,
-    required this.totalServiceCharge,
-    required this.totalSst,
+    required this.serviceCharge,
+    required this.sst,
+    required this.subtotal,
   });
 
   factory SummaryPerson.fromJson(Map<String, dynamic> json) =>

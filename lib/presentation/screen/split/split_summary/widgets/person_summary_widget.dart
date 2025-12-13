@@ -70,35 +70,30 @@ class PersonSummaryWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      Text("Foods:", style: context.textTheme.bodyLarge),
+                      ...?state.summaryModel?.summaryPerson[index].foods.map(
+                        (food) => _buildFoodItem(food),
+                      ),
 
                       _row(
                         "Subtotal",
-                        state
-                                .summaryModel
-                                ?.summaryPerson[index]
-                                .totalNeedToPay ??
-                            0,
+                        state.summaryModel?.summaryPerson[index].subtotal ?? 0,
                       ),
                       _row(
                         "Service Charge",
                         state
                                 .summaryModel
                                 ?.summaryPerson[index]
-                                .totalServiceCharge ??
+                                .serviceCharge ??
                             0,
                       ),
                       _row(
                         "SST",
-                        state.summaryModel?.summaryPerson[index].totalSst ?? 0,
+                        state.summaryModel?.summaryPerson[index].sst ?? 0,
                       ),
-
-                      const SizedBox(height: 12),
-                      Text("Foods:", style: context.textTheme.bodyLarge),
-                      const SizedBox(height: 6),
-
-                      ...?state.summaryModel?.summaryPerson[index].foods.map(
-                        (food) => _buildFoodItem(food),
+                      _row(
+                        "Need To Pay",
+                        state.summaryModel?.summaryPerson[index].needToPay ?? 0,
                       ),
                     ],
                   ),
