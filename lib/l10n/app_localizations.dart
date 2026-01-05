@@ -127,6 +127,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark Mode'**
   String get dark_mode;
+
+  /// No description provided for @search_with_dots.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get search_with_dots;
 }
 
 class _AppLocalizationsDelegate

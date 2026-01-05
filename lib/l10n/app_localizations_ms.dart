@@ -22,4 +22,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get dark_mode => 'Mod Gelap';
+
+  @override
+  String get search_with_dots => 'Cari...';
 }

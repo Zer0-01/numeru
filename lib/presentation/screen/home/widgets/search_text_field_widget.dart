@@ -9,23 +9,7 @@ class SearchTextFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 4.0),
       child: TextFormField(
-        decoration: InputDecoration(
-          filled: true,
-          isDense: true,
-          fillColor: context.colorScheme.surfaceContainerLow,
-          hintText: "Search tools...",
-          hintStyle: TextStyle(color: context.colorScheme.surfaceContainer),
-
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.transparent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: context.colorScheme.primary),
-          ),
-          prefixIcon: Icon(Icons.search),
-        ),
+        decoration: InputDecoration(hintText: context.l10n.search_with_dots),
       ),
     );
   }

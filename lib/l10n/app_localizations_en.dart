@@ -22,4 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dark_mode => 'Dark Mode';
+
+  @override
+  String get search_with_dots => 'Search...';
 }
