@@ -11,5 +11,15 @@
     "dark_mode": "Dark Mode",
     "@dark_mode": {},
     "search_with_dots": "Search...",
-    "@search_with_dots": {}
+    "@search_with_dots": {},
+    "hello_with_exclamation": "Hello!",
+    "@hello_with_exclamation": {},
+    "what_can_i_help_you_solve": "What can I help you solve?",
+    "@what_can_i_help_you_solve": {},
+    "split_your_bill_fairly": "Split your bill fairly",
+    "@split_your_bill_fairly": {},
+    "daily_insight": "Daily Insight",
+    "@daily_insight": {},
+    "quick_tools": "Quick Tools",
+    "@quick_tools": {}
 }

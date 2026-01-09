@@ -18,6 +18,15 @@ class FeatureGridWidget extends StatelessWidget {
     }
   }
 
+  String _getFeatureDescription(BuildContext context, String feature) {
+    switch (feature) {
+      case FeatureConstant.split:
+        return 'Divide checks and tax';
+      default:
+        return AppLocalizations.of(context)!.coming_soon;
+    }
+  }
+
   void Function()? _getoOnTapFeature(BuildContext context, String feature) {
     switch (feature) {
       case FeatureConstant.split:
@@ -31,51 +40,84 @@ class FeatureGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 1,
-        ),
-        itemCount: FeatureEnum.values.length,
-        itemBuilder: (context, index) {
-          final feature = FeatureEnum.values[index];
-
-          return InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: _getoOnTapFeature(context, feature.name),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: context.colorScheme.surfaceContainerLowest,
-              ),
-              child: Column(
-                spacing: 8,
-                children: [
-                  Expanded(
-                    child: Icon(
-                      feature.icon,
-                      color: context.colorScheme.primary,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      _getFeatureTitle(context, feature.name),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+      child: Column(
+        spacing: 16,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.quick_tools,
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-          );
-        },
+          ),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1,
+            ),
+            itemCount: FeatureEnum.values.length,
+            itemBuilder: (context, index) {
+              final feature = FeatureEnum.values[index];
+
+              return Material(
+                borderRadius: BorderRadius.circular(12),
+                color: context.colorScheme.surfaceContainerLowest,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: _getoOnTapFeature(context, feature.name),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: context.colorScheme.primary,
+                            ),
+                            child: Icon(
+                              feature.icon,
+                              color: context.colorScheme.onPrimary,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _getFeatureTitle(context, feature.name),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                _getFeatureDescription(context, feature.name),
+                                style: context.textTheme.labelLarge?.copyWith(
+                                  color: context.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

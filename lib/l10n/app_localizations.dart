@@ -133,6 +133,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search...'**
   String get search_with_dots;
+
+  /// No description provided for @hello_with_exclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello!'**
+  String get hello_with_exclamation;
+
+  /// No description provided for @what_can_i_help_you_solve.
+  ///
+  /// In en, this message translates to:
+  /// **'What can I help you solve?'**
+  String get what_can_i_help_you_solve;
+
+  /// No description provided for @split_your_bill_fairly.
+  ///
+  /// In en, this message translates to:
+  /// **'Split your bill fairly'**
+  String get split_your_bill_fairly;
+
+  /// No description provided for @daily_insight.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Insight'**
+  String get daily_insight;
+
+  /// No description provided for @quick_tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Tools'**
+  String get quick_tools;
 }
 
 class _AppLocalizationsDelegate

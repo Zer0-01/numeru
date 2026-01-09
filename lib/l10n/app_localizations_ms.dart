@@ -25,4 +25,19 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get search_with_dots => 'Cari...';
+
+  @override
+  String get hello_with_exclamation => 'Hello!';
+
+  @override
+  String get what_can_i_help_you_solve => 'Apa yang boleh saya bantu?';
+
+  @override
+  String get split_your_bill_fairly => 'Agih bil secara adil';
+
+  @override
+  String get daily_insight => 'Maklumat Harian';
+
+  @override
+  String get quick_tools => 'Alat Cepat';
 }

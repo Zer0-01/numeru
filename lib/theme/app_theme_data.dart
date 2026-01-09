@@ -15,7 +15,7 @@ class AppColorSchemes {
     onError: Colors.white,
     surface: Colors.grey.shade100,
     onSurface: Colors.black,
-    onSurfaceVariant: Colors.grey,
+    onSurfaceVariant: Colors.grey.shade700,
     surfaceContainer: Colors.grey,
     surfaceContainerLowest: Colors.white,
     surfaceContainerLow: Colors.grey.shade200,

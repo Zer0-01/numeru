@@ -25,4 +25,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get search_with_dots => 'Search...';
+
+  @override
+  String get hello_with_exclamation => 'Hello!';
+
+  @override
+  String get what_can_i_help_you_solve => 'What can I help you solve?';
+
+  @override
+  String get split_your_bill_fairly => 'Split your bill fairly';
+
+  @override
+  String get daily_insight => 'Daily Insight';
+
+  @override
+  String get quick_tools => 'Quick Tools';
 }

@@ -5,5 +5,10 @@
     "language": "Bahasa",
     "done": "Selesai",
     "dark_mode": "Mod Gelap",
-    "search_with_dots": "Cari..."
+    "search_with_dots": "Cari...",
+    "hello_with_exclamation": "Hello!",
+    "what_can_i_help_you_solve": "Apa yang boleh saya bantu?",
+    "split_your_bill_fairly": "Agih bil secara adil",
+    "daily_insight": "Maklumat Harian",
+    "quick_tools": "Alat Cepat"
 }
