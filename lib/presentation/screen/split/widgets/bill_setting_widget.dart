@@ -19,10 +19,13 @@ class BillSettingWidget extends StatelessWidget {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsetsGeometry.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           sliver: SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: context.colorScheme.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(16),
@@ -33,12 +36,12 @@ class BillSettingWidget extends StatelessWidget {
                   Row(
                     spacing: 4,
                     children: [
-                      Expanded(child: Text("Include SST 6%")),
+                      const Expanded(child: Text("Include SST 6%")),
                       Switch.adaptive(
                         value: state.isIncludeSst,
                         onChanged: (_) {
                           context.read<SplitBloc>().add(
-                            OnChangedIncludeSstEvent(),
+                            const OnChangedIncludeSstEvent(),
                           );
                         },
                         activeTrackColor: context.colorScheme.primary,
@@ -48,12 +51,12 @@ class BillSettingWidget extends StatelessWidget {
                   Row(
                     spacing: 4,
                     children: [
-                      Expanded(child: Text("Include Service Charge")),
+                      const Expanded(child: Text("Include Service Charge")),
                       Switch.adaptive(
                         value: state.isHaveServiceCharge,
                         onChanged: (_) {
                           context.read<SplitBloc>().add(
-                            OnChangedHaveServiceChargeEvent(),
+                            const OnChangedHaveServiceChargeEvent(),
                           );
                         },
                         activeTrackColor: context.colorScheme.primary,
@@ -73,7 +76,9 @@ class BillSettingWidget extends StatelessWidget {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: Colors.transparent),
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -87,7 +92,7 @@ class BillSettingWidget extends StatelessWidget {
                   Row(
                     spacing: 4,
                     children: [
-                      Expanded(child: Text("Total Bill")),
+                      const Expanded(child: Text("Total Bill")),
                       Expanded(
                         child: TextFormField(
                           controller: totalBillController,
@@ -98,7 +103,9 @@ class BillSettingWidget extends StatelessWidget {
 
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide(color: Colors.transparent),
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),

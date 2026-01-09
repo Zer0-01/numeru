@@ -67,7 +67,6 @@ class FeatureGridWidget extends StatelessWidget {
                   Expanded(
                     child: Text(
                       _getFeatureTitle(context, feature.name),
-                      style: TextStyle(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                     ),

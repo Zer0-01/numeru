@@ -50,12 +50,12 @@ class PersonSummaryWidget extends StatelessWidget {
           ),
           child: ListView.separated(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            separatorBuilder: (context, index) => SizedBox(height: 16),
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemCount: state.summaryModel?.summaryPerson.length ?? 0,
             itemBuilder:
                 (context, index) => Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: context.colorScheme.surfaceContainerLowest,
                     borderRadius: BorderRadius.circular(12),

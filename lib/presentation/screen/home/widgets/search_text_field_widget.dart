@@ -12,7 +12,7 @@ class SearchTextFieldWidget extends StatelessWidget {
       child: AppTextFieldWidget(
         fillColor: context.theme.colorScheme.surfaceContainerLowest,
         hint: context.l10n.search_with_dots,
-        prefixIcon: Icon(Icons.search),
+        prefixIcon: const Icon(Icons.search),
       ),
     );
   }

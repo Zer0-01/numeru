@@ -33,14 +33,14 @@ class PersonListWidget extends StatelessWidget {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         if (state.persons.isEmpty) {
-          return SliverToBoxAdapter(child: SizedBox.shrink());
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
 
         return SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           sliver: SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: context.colorScheme.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(16),
@@ -82,7 +82,8 @@ class PersonListWidget extends StatelessWidget {
                             onPressed: () async {
                               final isDelete = await showDialog<bool>(
                                 context: context,
-                                builder: (context) => DeletePersonDialog(),
+                                builder:
+                                    (context) => const DeletePersonDialog(),
                               );
 
                               if (isDelete == true) {
@@ -92,7 +93,7 @@ class PersonListWidget extends StatelessWidget {
                                 );
                               }
                             },
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                           ),
                         ],
                       ),
@@ -115,7 +116,7 @@ class PersonListWidget extends StatelessWidget {
 
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
@@ -144,7 +145,7 @@ class PersonListWidget extends StatelessWidget {
 
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
@@ -160,9 +161,10 @@ class PersonListWidget extends StatelessWidget {
                           Expanded(
                             child: TextFormField(
                               controller: priceController,
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
                               decoration: InputDecoration(
                                 filled: true,
                                 isDense: true,
@@ -175,7 +177,7 @@ class PersonListWidget extends StatelessWidget {
 
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
@@ -226,12 +228,12 @@ class PersonListWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          child: Text("Add Food"),
+                          child: const Text("Add Food"),
                         ),
                       ),
                       if (person.foods.isNotEmpty)
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: context.colorScheme.surfaceContainerLow,
                             borderRadius: BorderRadius.circular(16),
@@ -261,7 +263,7 @@ class PersonListWidget extends StatelessWidget {
                                         context: context,
                                         builder:
                                             (context) =>
-                                                DeleteFoodDialogWidget(),
+                                                const DeleteFoodDialogWidget(),
                                       );
 
                                       if (isDelete == true) {
@@ -274,7 +276,7 @@ class PersonListWidget extends StatelessWidget {
                                         );
                                       }
                                     },
-                                    icon: Icon(Icons.delete),
+                                    icon: const Icon(Icons.delete),
                                   ),
                                 ],
                               );

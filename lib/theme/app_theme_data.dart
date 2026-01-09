@@ -15,6 +15,7 @@ class AppColorSchemes {
     onError: Colors.white,
     surface: Colors.grey.shade100,
     onSurface: Colors.black,
+    onSurfaceVariant: Colors.grey,
     surfaceContainer: Colors.grey,
     surfaceContainerLowest: Colors.white,
     surfaceContainerLow: Colors.grey.shade200,
@@ -127,7 +128,7 @@ class AppInputDecorationTheme {
       filled: true,
       fillColor: scheme.surfaceContainerLow,
       isDense: true,
-      prefixIconColor: scheme.surfaceContainer,
+      prefixIconColor: scheme.onSurfaceVariant,
     );
   }
 

@@ -20,10 +20,10 @@ class SplitSummaryScreen extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
           onPressed: () => context.router.maybePop(),
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [OverallSummaryWidget(), PersonSummaryWidget()],
         ),

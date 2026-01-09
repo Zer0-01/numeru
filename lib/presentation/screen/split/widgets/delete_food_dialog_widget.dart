@@ -22,7 +22,7 @@ class DeleteFoodDialogWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text("Are you sure want to delete this food?"),
+            const Text("Are you sure want to delete this food?"),
             Row(
               spacing: 8,
               children: [
@@ -54,7 +54,7 @@ class DeleteFoodDialogWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: Text("Delete"),
+                    child: const Text("Delete"),
                   ),
                 ),
               ],

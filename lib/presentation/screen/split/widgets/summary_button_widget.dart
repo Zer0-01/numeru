@@ -42,7 +42,7 @@ class SummaryButtonWidget extends StatelessWidget {
     return BlocBuilder<SplitBloc, SplitState>(
       builder: (context, state) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.only(
+          padding: const EdgeInsetsGeometry.only(
             left: 16,
             top: 8,
             right: 16,
@@ -77,7 +77,7 @@ class SummaryButtonWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: Text("Summary"),
+                child: const Text("Summary"),
               ),
             ),
           ),

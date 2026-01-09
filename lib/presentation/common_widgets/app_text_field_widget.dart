@@ -85,7 +85,7 @@ class AppTextFieldWidget extends StatelessWidget {
         hintStyle:
             hintStyle ??
             context.textTheme.bodyMedium?.copyWith(
-              color: context.theme.colorScheme.surfaceContainer,
+              color: context.theme.colorScheme.onSurfaceVariant,
             ),
       ),
     );

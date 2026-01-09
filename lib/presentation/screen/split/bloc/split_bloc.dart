@@ -8,7 +8,7 @@ part 'split_event.dart';
 part 'split_state.dart';
 
 class SplitBloc extends Bloc<SplitEvent, SplitState> {
-  SplitBloc() : super(SplitState()) {
+  SplitBloc() : super(const SplitState()) {
     on<OnAddPersonEvent>(_onAddPersonEvent);
     on<OnAddFoodEvent>(_onAddFoodEvent);
     on<OnChangedIncludeSstEvent>(_onChangedIncludeSstEvent);

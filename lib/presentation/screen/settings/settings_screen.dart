@@ -13,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => context.router.maybePop(),
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
         ),
         title: Text(context.l10n.settings),
         backgroundColor: context.colorScheme.surface,
@@ -32,8 +32,8 @@ class SettingsScreen extends StatelessWidget {
               child: Icon(Icons.language, color: context.colorScheme.onPrimary),
             ),
             title: Text(context.l10n.language),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () => context.router.push(LanguageSetupRoute()),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.router.push(const LanguageSetupRoute()),
           ),
           ListTile(
             leading: Container(

@@ -11,7 +11,7 @@ void showErrorToast(BuildContext context, String title, String? description) {
     alignment: Alignment.bottomCenter,
     autoCloseDuration: const Duration(seconds: 2),
     borderRadius: BorderRadius.circular(12.0),
-    closeButton: ToastCloseButton(showType: CloseButtonShowType.none),
+    closeButton: const ToastCloseButton(showType: CloseButtonShowType.none),
     closeOnClick: false,
     dragToClose: true,
     pauseOnHover: false,

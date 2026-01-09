@@ -14,10 +14,10 @@ class PersonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 8),
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 8),
       sliver: SliverToBoxAdapter(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: context.colorScheme.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(16),
@@ -38,7 +38,7 @@ class PersonWidget extends StatelessWidget {
 
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -63,7 +63,7 @@ class PersonWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: Text("Add Person"),
+                  child: const Text("Add Person"),
                 ),
               ),
             ],
