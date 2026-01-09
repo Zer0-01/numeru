@@ -22,7 +22,7 @@ class DeletePersonDialog extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text("Are you sure want to delete this person?"),
+            const Text("Are you sure want to delete this person?"),
             Row(
               spacing: 8,
               children: [
@@ -54,7 +54,7 @@ class DeletePersonDialog extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: Text("Delete"),
+                    child: const Text("Delete"),
                   ),
                 ),
               ],
