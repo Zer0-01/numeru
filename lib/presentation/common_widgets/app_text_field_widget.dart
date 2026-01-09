@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:numeru/extensions/context_extension.dart';
 
 class AppTextFieldWidget extends StatelessWidget {
   final String? label;
@@ -13,6 +14,11 @@ class AppTextFieldWidget extends StatelessWidget {
   final BoxConstraints? prefixIconConstraints;
   final bool? filled;
   final Color? fillColor;
+  final InputBorder? border;
+  final InputBorder? enabledBorder;
+  final InputBorder? focusedBorder;
+  final InputBorder? errorBorder;
+  final TextStyle? hintStyle;
 
   const AppTextFieldWidget({
     super.key,
@@ -28,12 +34,15 @@ class AppTextFieldWidget extends StatelessWidget {
     this.prefixIconConstraints,
     this.filled,
     this.fillColor,
+    this.border,
+    this.enabledBorder,
+    this.focusedBorder,
+    this.errorBorder,
+    this.hintStyle,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -41,24 +50,43 @@ class AppTextFieldWidget extends StatelessWidget {
       maxLines: maxLines,
       validator: validator,
       onChanged: onChanged,
+
       decoration: InputDecoration(
         filled: filled,
         fillColor: fillColor,
         labelText: label,
-
         hintText: hint,
-        isDense: true,
         prefixIcon: prefixIcon,
         prefixIconConstraints: prefixIconConstraints,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.6),
-        ),
+        border:
+            border ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+        enabledBorder:
+            enabledBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+        focusedBorder:
+            focusedBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: context.theme.colorScheme.primary),
+            ),
+        errorBorder:
+            errorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: context.theme.colorScheme.error),
+            ),
+        hintStyle:
+            hintStyle ??
+            context.textTheme.bodyMedium?.copyWith(
+              color: context.theme.colorScheme.surfaceContainer,
+            ),
       ),
     );
   }

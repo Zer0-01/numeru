@@ -107,14 +107,7 @@ class AppAppBarTheme {
       backgroundColor: scheme.surface,
       foregroundColor: scheme.onSurface,
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
       centerTitle: true,
-      iconTheme: IconThemeData(color: scheme.onSurface),
-      titleTextStyle: TextStyle(
-        color: scheme.onSurface,
-        fontSize: 17,
-        fontWeight: FontWeight.w600,
-      ),
     );
   }
 
@@ -123,14 +116,7 @@ class AppAppBarTheme {
       backgroundColor: scheme.surface,
       foregroundColor: scheme.onSurface,
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
       centerTitle: true,
-      iconTheme: IconThemeData(color: scheme.onSurface),
-      titleTextStyle: TextStyle(
-        color: scheme.onSurface,
-        fontSize: 17,
-        fontWeight: FontWeight.w600,
-      ),
     );
   }
 }
@@ -139,48 +125,9 @@ class AppInputDecorationTheme {
   static InputDecorationTheme light(ColorScheme scheme) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: scheme.surfaceContainerLowest,
+      fillColor: scheme.surfaceContainerLow,
       isDense: true,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.outlineVariant),
-      ),
-
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.outlineVariant),
-      ),
-
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.primary, width: 1.5),
-      ),
-
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.error),
-      ),
-
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.error, width: 1.5),
-      ),
-
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(
-          color: scheme.outlineVariant.withValues(alpha: 0.5),
-        ),
-      ),
-
-      labelStyle: TextStyle(color: scheme.onSurfaceVariant),
-      hintStyle: TextStyle(
-        color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
-      ),
-      helperStyle: TextStyle(color: scheme.onSurfaceVariant),
-      errorStyle: TextStyle(color: scheme.error),
+      prefixIconColor: scheme.surfaceContainer,
     );
   }
 
@@ -189,46 +136,6 @@ class AppInputDecorationTheme {
       filled: true,
       fillColor: scheme.surfaceContainerLowest,
       isDense: true,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.outlineVariant),
-      ),
-
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.outlineVariant),
-      ),
-
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.primary, width: 1.5),
-      ),
-
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.error),
-      ),
-
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.error, width: 1.5),
-      ),
-
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(
-          color: scheme.outlineVariant.withValues(alpha: 0.4),
-        ),
-      ),
-
-      labelStyle: TextStyle(color: scheme.onSurfaceVariant),
-      hintStyle: TextStyle(
-        color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
-      ),
-      helperStyle: TextStyle(color: scheme.onSurfaceVariant),
-      errorStyle: TextStyle(color: scheme.error),
     );
   }
 }
