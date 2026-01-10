@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numeru/constant/padding_constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_dialog_widget.dart';
 
 class WhoIsPayingWidget extends StatelessWidget {
   const WhoIsPayingWidget({super.key});
@@ -27,20 +26,7 @@ class WhoIsPayingWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       splashColor: Colors.transparent,
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AppDialogWidget(
-                              title: "Test",
-                              topButtonLabel: "Add",
-                              onPressedTopButton: () {
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                        );
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(

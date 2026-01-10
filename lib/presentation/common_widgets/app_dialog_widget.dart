@@ -27,7 +27,7 @@ class AppDialogWidget extends StatelessWidget {
             if (subtitle != null) Text(subtitle ?? ""),
             if (topButtonLabel != null && onPressedTopButton != null)
               AppFilledButtonWidget(
-                label: "Add",
+                label: topButtonLabel ?? "",
                 onPressed: onPressedTopButton,
               ),
           ],

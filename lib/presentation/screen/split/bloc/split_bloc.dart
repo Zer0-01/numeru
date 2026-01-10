@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:numeru/data/models/people_model.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/data/models/summary_model.dart';
 
@@ -17,6 +18,8 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
     on<OnDeletePersonEvent>(_onDeletePersonEvent);
     on<OnDeleteFoodEvent>(_onDeleteFoodEvent);
+
+    on<OnAddPeopleEvent>(_onAddPeopleEvent);
   }
 
   void _onAddPersonEvent(OnAddPersonEvent event, Emitter<SplitState> emit) {
@@ -197,5 +200,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
           return p;
         }).toList();
     emit(state.copyWith(persons: updated));
+  }
+
+  void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<SplitState> emit) {
+    //emit(state.copyWith(persons: [...state.persons, PersonModel()]));
   }
 }

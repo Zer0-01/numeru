@@ -8,6 +8,7 @@ class SplitState extends Equatable {
   final bool isIncludeSst;
   final bool isHaveServiceCharge;
   final SummaryModel? summaryModel;
+  final List<PeopleModel> peopleModel;
 
   const SplitState({
     this.splitStatus = SplitStatus.initial,
@@ -15,6 +16,7 @@ class SplitState extends Equatable {
     this.isIncludeSst = false,
     this.isHaveServiceCharge = false,
     this.summaryModel,
+    this.peopleModel = const [],
   });
 
   SplitState copyWith({
@@ -23,6 +25,7 @@ class SplitState extends Equatable {
     bool? isIncludeSst,
     bool? isHaveServiceCharge,
     SummaryModel? summaryModel,
+    List<PeopleModel>? peopleModel,
   }) {
     return SplitState(
       splitStatus: splitStatus ?? this.splitStatus,
@@ -30,6 +33,7 @@ class SplitState extends Equatable {
       isIncludeSst: isIncludeSst ?? this.isIncludeSst,
       isHaveServiceCharge: isHaveServiceCharge ?? this.isHaveServiceCharge,
       summaryModel: summaryModel ?? this.summaryModel,
+      peopleModel: peopleModel ?? this.peopleModel,
     );
   }
 
@@ -40,5 +44,6 @@ class SplitState extends Equatable {
     isIncludeSst,
     isHaveServiceCharge,
     summaryModel,
+    peopleModel,
   ];
 }

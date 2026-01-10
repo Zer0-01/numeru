@@ -78,3 +78,10 @@ class OnDeleteFoodEvent extends SplitEvent {
   @override
   List<Object> get props => [personId, foodId];
 }
+
+class OnAddPeopleEvent extends SplitEvent {
+  const OnAddPeopleEvent();
+
+  @override
+  List<Object> get props => [];
+}

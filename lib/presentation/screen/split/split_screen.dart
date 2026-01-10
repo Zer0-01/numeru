@@ -66,8 +66,8 @@ class _SplitScreenState extends State<SplitScreen> {
 
       body: CustomScrollView(
         slivers: [
-          WhoIsPayingWidget(),
-          ReceiptSettingsWidget(),
+          const WhoIsPayingWidget(),
+          const ReceiptSettingsWidget(),
           PersonWidget(nameController: _nameController),
           PersonListWidget(
             foodControllers: _foodControllers,
