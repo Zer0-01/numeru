@@ -7,6 +7,8 @@ class AppAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final IconThemeData? actionsIconTheme;
   final EdgeInsetsGeometry? actionsPadding;
+  final bool isBack;
+  final void Function()? onPressedBack;
 
   const AppAppBarWidget({
     super.key,
@@ -15,11 +17,30 @@ class AppAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.actionsIconTheme,
     this.actionsPadding,
+    this.isBack = false,
+    this.onPressedBack,
   });
+
+  const AppAppBarWidget.back({
+    super.key,
+    this.title = '',
+    this.titleTextStyle,
+    this.actions,
+    this.actionsIconTheme,
+    this.actionsPadding,
+    required this.onPressedBack,
+  }) : isBack = true;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading:
+          isBack
+              ? IconButton(
+                onPressed: onPressedBack,
+                icon: const Icon(Icons.chevron_left),
+              )
+              : null,
       title: title.isNotEmpty ? Text(title) : null,
       titleTextStyle:
           titleTextStyle ??

@@ -40,4 +40,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quick_tools => 'Quick Tools';
+
+  @override
+  String get receipt_settings => 'Receipt Settings';
 }

@@ -40,4 +40,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get quick_tools => 'Alat Cepat';
+
+  @override
+  String get receipt_settings => 'Tetapan Resit';
 }

@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:numeru/extensions/context_extension.dart';
+import 'package:numeru/presentation/common_widgets/app_app_bar_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/bill_setting_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/person_widget.dart';
+import 'package:numeru/presentation/screen/split/widgets/receipt_settings_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/summary_button_widget.dart';
+import 'package:numeru/presentation/screen/split/widgets/who_is_paying_widget.dart';
 
 class SplitScreen extends StatefulWidget {
   const SplitScreen({super.key});
@@ -57,21 +59,15 @@ class _SplitScreenState extends State<SplitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => context.router.maybePop(),
-          icon: Icon(Icons.chevron_left, color: context.colorScheme.onSurface),
-        ),
-        title: Text(
-          "Split",
-          style: TextStyle(color: context.colorScheme.onSurface),
-        ),
-        centerTitle: true,
-        backgroundColor: context.colorScheme.surface,
-        surfaceTintColor: Colors.transparent,
+      appBar: AppAppBarWidget.back(
+        onPressedBack: () => context.router.maybePop(),
+        title: "Split",
       ),
+
       body: CustomScrollView(
         slivers: [
+          WhoIsPayingWidget(),
+          ReceiptSettingsWidget(),
           PersonWidget(nameController: _nameController),
           PersonListWidget(
             foodControllers: _foodControllers,

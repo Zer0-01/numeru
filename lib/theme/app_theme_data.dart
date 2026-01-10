@@ -102,6 +102,27 @@ class AppSwitchThemeData {
   }
 }
 
+class AppFilledButtonThemeData {
+  static FilledButtonThemeData light(ColorScheme scheme) {
+    return FilledButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
+    );
+  }
+}
+
+class AppDialogThemeData {
+  static DialogThemeData light(ColorScheme scheme) {
+    return DialogThemeData(
+      backgroundColor: scheme.surfaceContainerLowest,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    );
+  }
+}
+
 class AppAppBarTheme {
   static AppBarTheme light(ColorScheme scheme) {
     return AppBarTheme(
@@ -153,6 +174,8 @@ class AppThemeData {
       switchTheme: AppSwitchThemeData.light(scheme),
       appBarTheme: AppAppBarTheme.light(scheme),
       inputDecorationTheme: AppInputDecorationTheme.light(scheme),
+      filledButtonTheme: AppFilledButtonThemeData.light(scheme),
+      dialogTheme: AppDialogThemeData.light(scheme),
     );
   }
 

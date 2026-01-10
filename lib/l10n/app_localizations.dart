@@ -163,6 +163,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quick Tools'**
   String get quick_tools;
+
+  /// No description provided for @receipt_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Settings'**
+  String get receipt_settings;
 }
 
 class _AppLocalizationsDelegate

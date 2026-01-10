@@ -21,5 +21,7 @@
     "daily_insight": "Daily Insight",
     "@daily_insight": {},
     "quick_tools": "Quick Tools",
-    "@quick_tools": {}
+    "@quick_tools": {},
+    "receipt_settings": "Receipt Settings",
+    "@receipt_settings": {}
 }
