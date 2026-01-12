@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/constant/padding_constant.dart';
+import 'package:numeru/constant/sizes_constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 import 'package:numeru/util/common_functions.dart';
@@ -41,12 +42,18 @@ class WhoIsPayingWidget extends StatelessWidget {
                                 );
                               },
                               child: Container(
+                                width: SizesConstant.widthPercentage(
+                                  context,
+                                  15,
+                                ),
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: getAvatarColor(people.id),
                                 ),
-                                child: Text(getInitials(people.name)),
+                                child: Center(
+                                  child: Text(getInitials(people.name)),
+                                ),
                               ),
                             ),
                             Text(
@@ -68,6 +75,7 @@ class WhoIsPayingWidget extends StatelessWidget {
                               );
                             },
                             child: Container(
+                              width: SizesConstant.widthPercentage(context, 15),
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -75,7 +83,7 @@ class WhoIsPayingWidget extends StatelessWidget {
                                   color: context.colorScheme.surfaceContainer,
                                 ),
                               ),
-                              child: const Text("+"),
+                              child: const Center(child: Text("+")),
                             ),
                           ),
                           Text(
