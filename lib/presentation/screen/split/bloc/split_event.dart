@@ -13,3 +13,10 @@ class OnAddPeopleEvent extends SplitEvent {
   @override
   List<Object> get props => [];
 }
+
+class OnAddItemEvent extends SplitEvent {
+  const OnAddItemEvent();
+
+  @override
+  List<Object> get props => [];
+}

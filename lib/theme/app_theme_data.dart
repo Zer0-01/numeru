@@ -114,6 +114,35 @@ class AppFilledButtonThemeData {
   }
 }
 
+class AppOutlinedButtonThemeData {
+  static OutlinedButtonThemeData light(ColorScheme scheme) {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ).copyWith(
+        overlayColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.pressed)) {
+            return scheme.primary.withValues(alpha: 0.08);
+          }
+          return null;
+        }),
+        side: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return BorderSide(color: scheme.primary.withValues(alpha: 0.2));
+          }
+          return BorderSide(color: scheme.primary);
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return scheme.primary.withValues(alpha: 0.2);
+          }
+          return scheme.primary;
+        }),
+      ),
+    );
+  }
+}
+
 class AppDialogThemeData {
   static DialogThemeData light(ColorScheme scheme) {
     return DialogThemeData(
@@ -175,6 +204,7 @@ class AppThemeData {
       appBarTheme: AppAppBarTheme.light(scheme),
       inputDecorationTheme: AppInputDecorationTheme.light(scheme),
       filledButtonTheme: AppFilledButtonThemeData.light(scheme),
+      outlinedButtonTheme: AppOutlinedButtonThemeData.light(scheme),
       dialogTheme: AppDialogThemeData.light(scheme),
     );
   }

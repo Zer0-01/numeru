@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/presentation/common_widgets/app_app_bar_widget.dart';
+import 'package:numeru/presentation/screen/split/widgets/item_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/receipt_settings_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/who_is_paying_widget.dart';
 
@@ -16,7 +17,11 @@ class SplitScreen extends StatelessWidget {
       ),
 
       body: const CustomScrollView(
-        slivers: [WhoIsPayingWidget(), ReceiptSettingsWidget()],
+        slivers: [
+          WhoIsPayingWidget(),
+          ReceiptSettingsWidget(),
+          ItemListWidget(),
+        ],
       ),
     );
   }
