@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/common_widgets/app_chip_widget.dart';
+import 'package:numeru/presentation/common_widgets/app_switch_widget.dart';
 import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 
 class ItemCardWidget extends StatelessWidget {
@@ -45,6 +46,12 @@ class ItemCardWidget extends StatelessWidget {
                   ),
                 ),
               ),
+            ],
+          ),
+          Row(
+            children: [
+              AppSwitchWidget(value: false, onChanged: (_) {}),
+              const Text("Shared to all"),
             ],
           ),
         ],
