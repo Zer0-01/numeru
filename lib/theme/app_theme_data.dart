@@ -173,6 +173,24 @@ class AppAppBarTheme {
   }
 }
 
+class AppBottomAppBarTheme {
+  static BottomAppBarThemeData light(ColorScheme scheme) {
+    return BottomAppBarThemeData(
+      color: scheme.surfaceContainerLowest,
+
+      surfaceTintColor: Colors.transparent,
+    );
+  }
+
+  static BottomAppBarThemeData dark(ColorScheme scheme) {
+    return BottomAppBarThemeData(
+      color: scheme.surfaceContainerLowest,
+
+      surfaceTintColor: Colors.transparent,
+    );
+  }
+}
+
 class AppInputDecorationTheme {
   static InputDecorationTheme light(ColorScheme scheme) {
     return InputDecorationTheme(
@@ -208,6 +226,7 @@ class AppThemeData {
       filledButtonTheme: AppFilledButtonThemeData.light(scheme),
       outlinedButtonTheme: AppOutlinedButtonThemeData.light(scheme),
       dialogTheme: AppDialogThemeData.light(scheme),
+      bottomAppBarTheme: AppBottomAppBarTheme.light(scheme),
     );
   }
 
