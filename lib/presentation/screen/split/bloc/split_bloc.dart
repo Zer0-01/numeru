@@ -12,17 +12,33 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
   SplitBloc() : super(const SplitState()) {
     on<OnAddPeopleEvent>(_onAddPeopleEvent);
+    on<OnRemovePeopleEvent>(_onRemovePeopleEvent);
     on<OnAddItemEvent>(_onAddItemEvent);
   }
 
   void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<SplitState> emit) {
     _logger.debug("OnAddPeopleEvent");
-    final PersonModel person = PersonModel(
-      id: state.peopleModel.length + 1,
-      name: "Person ${state.peopleModel.length + 1}",
-    );
+    final nextId =
+        state.peopleModel.isEmpty
+            ? 1
+            : state.peopleModel
+                    .map((e) => e.id)
+                    .reduce((a, b) => a > b ? a : b) +
+                1;
+
+    final PersonModel person = PersonModel(id: nextId, name: "Person $nextId");
 
     emit(state.copyWith(peopleModel: [...state.peopleModel, person]));
+  }
+
+  void _onRemovePeopleEvent(
+    OnRemovePeopleEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    _logger.debug("OnRemovePeopleEvent: ${event.id}");
+    final updatedPeople =
+        state.peopleModel.where((p) => p.id != event.id).toList();
+    emit(state.copyWith(peopleModel: updatedPeople));
   }
 
   void _onAddItemEvent(OnAddItemEvent event, Emitter<SplitState> emit) {

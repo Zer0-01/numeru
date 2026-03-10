@@ -29,40 +29,98 @@ class WhoIsPayingWidget extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    spacing: 8,
+                    spacing: 12,
                     children: [
                       ...state.peopleModel.map(
-                        (people) => Column(
-                          children: [
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                context.read<SplitBloc>().add(
-                                  const OnAddPeopleEvent(),
-                                );
-                              },
-                              child: Container(
-                                width: SizesConstant.widthPercentage(
-                                  context,
-                                  15,
-                                ),
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: getAvatarColor(people.id),
-                                ),
-                                child: Center(
-                                  child: Text(getInitials(people.name)),
+                        (people) => TweenAnimationBuilder<double>(
+                          key: ValueKey(people.id),
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOutBack,
+                          builder: (context, value, child) {
+                            return Transform.scale(scale: value, child: child);
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    width: SizesConstant.widthPercentage(
+                                      context,
+                                      14,
+                                    ),
+                                    height: SizesConstant.widthPercentage(
+                                      context,
+                                      14,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: getAvatarColor(
+                                        people.id,
+                                      ).withValues(alpha: 0.8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withValues(
+                                            alpha: 0.05,
+                                          ),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        getInitials(people.name),
+                                        style: context.textTheme.titleSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: -2,
+                                    top: -2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        context.read<SplitBloc>().add(
+                                          OnRemovePeopleEvent(people.id),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          color: context.colorScheme.error,
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color:
+                                                context.colorScheme.onPrimary,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        child: Icon(
+                                          Icons.close_rounded,
+                                          size: 10,
+                                          color: context.colorScheme.onError,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                people.name,
+                                style: context.textTheme.labelMedium?.copyWith(
+                                  color: context.colorScheme.onSurfaceVariant,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ),
-                            Text(
-                              people.name,
-                              style: context.textTheme.labelMedium?.copyWith(
-                                color: context.colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Column(
@@ -75,21 +133,34 @@ class WhoIsPayingWidget extends StatelessWidget {
                               );
                             },
                             child: Container(
-                              width: SizesConstant.widthPercentage(context, 15),
-                              padding: const EdgeInsets.all(16),
+                              width: SizesConstant.widthPercentage(context, 14),
+                              height: SizesConstant.widthPercentage(
+                                context,
+                                14,
+                              ),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
+                                color: context.colorScheme.surfaceContainerLow,
                                 border: Border.all(
-                                  color: context.colorScheme.surfaceContainer,
+                                  color: context.colorScheme.outlineVariant,
+                                  width: 1,
                                 ),
                               ),
-                              child: const Center(child: Text("+")),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add_rounded,
+                                  size: 20,
+                                  color: context.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
                             ),
                           ),
+                          const SizedBox(height: 4),
                           Text(
                             "Add",
                             style: context.textTheme.labelMedium?.copyWith(
                               color: context.colorScheme.onSurfaceVariant,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
