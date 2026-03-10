@@ -9,6 +9,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: HomeSetupRoute.page, path: '/', initial: true),
     AutoRoute(page: SplitSetupRoute.page, path: '/split'),
+    AutoRoute(page: SplitSummaryRoute.page, path: '/split-summary'),
     AutoRoute(page: SettingsSetupRoute.page, path: '/settings'),
     AutoRoute(page: LanguageSetupRoute.page, path: '/language'),
   ];

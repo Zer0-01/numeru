@@ -59,3 +59,28 @@ class OnToggleAllItemPersonsEvent extends SplitEvent {
   @override
   List<Object> get props => [itemId, isShared];
 }
+
+class OnToggleTaxIncludedEvent extends SplitEvent {
+  final bool isTaxIncluded;
+
+  const OnToggleTaxIncludedEvent(this.isTaxIncluded);
+
+  @override
+  List<Object> get props => [isTaxIncluded];
+}
+
+class OnUpdateTaxValueEvent extends SplitEvent {
+  final double taxPercentage;
+
+  const OnUpdateTaxValueEvent(this.taxPercentage);
+
+  @override
+  List<Object> get props => [taxPercentage];
+}
+
+class OnCalculateSplitEvent extends SplitEvent {
+  const OnCalculateSplitEvent();
+
+  @override
+  List<Object> get props => [];
+}
