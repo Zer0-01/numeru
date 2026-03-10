@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -219,7 +218,6 @@ class AppThemeData {
       brightness: Brightness.light,
       fontFamily: GoogleFonts.sourceSans3().fontFamily,
       colorScheme: scheme,
-      cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
       switchTheme: AppSwitchThemeData.light(scheme),
       appBarTheme: AppAppBarTheme.light(scheme),
       inputDecorationTheme: AppInputDecorationTheme.light(scheme),
