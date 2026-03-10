@@ -29,7 +29,8 @@ class ItemListWidget extends StatelessWidget {
                 );
               }
 
-              return ItemCardWidget(persons: state.peopleModel);
+              final item = state.itemsModel[index];
+              return ItemCardWidget(item: item, persons: state.peopleModel);
             },
           ),
         );

@@ -18,6 +18,7 @@ class AppTextFieldWidget extends StatelessWidget {
   final InputBorder? enabledBorder;
   final InputBorder? focusedBorder;
   final InputBorder? errorBorder;
+  final String? initialValue;
   final TextStyle? hintStyle;
 
   const AppTextFieldWidget({
@@ -30,6 +31,7 @@ class AppTextFieldWidget extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.onChanged,
+    this.initialValue,
     this.prefixIcon,
     this.prefixIconConstraints,
     this.filled,
@@ -45,6 +47,7 @@ class AppTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      initialValue: initialValue,
       keyboardType: keyboardType,
       obscureText: obscureText,
       maxLines: maxLines,

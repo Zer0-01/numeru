@@ -16,6 +16,20 @@ class ItemModel {
     required this.personIds,
   });
 
+  ItemModel copyWith({
+    int? id,
+    String? name,
+    double? price,
+    List<int>? personIds,
+  }) {
+    return ItemModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      personIds: personIds ?? this.personIds,
+    );
+  }
+
   factory ItemModel.fromJson(Map<String, dynamic> json) =>
       _$ItemModelFromJson(json);
 
