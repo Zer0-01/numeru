@@ -52,7 +52,7 @@ class LanguageScreen extends StatelessWidget {
                 final LocaleEnum locale = LocaleEnum.values[index];
                 return ListTile(
                   title: Text(locale.title),
-                  trailing: Radio.adaptive(
+                  trailing: Radio(
                     value: locale.value,
                     activeColor: context.colorScheme.primary,
                   ),

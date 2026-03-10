@@ -33,7 +33,7 @@ class SplitScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Split between"),
+                  const Text("Split between"),
                   Text(
                     "3 People",
                     style: context.textTheme.titleMedium?.copyWith(

@@ -48,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             title: Text(context.l10n.dark_mode),
-            trailing: Switch.adaptive(
+            trailing: Switch(
               value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
               onChanged: (isDark) {
                 if (isDark) {
