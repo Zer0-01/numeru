@@ -27,6 +27,28 @@ class SplitScreen extends StatelessWidget {
       },
       child: BlocBuilder<SplitBloc, SplitState>(
         builder: (context, state) {
+          final bool hasNoItem = state.itemsModel.isEmpty;
+          final bool hasNoPerson = state.peopleModel.isEmpty;
+          final bool hasItemWithNoName = state.itemsModel.any(
+            (item) => item.name.trim().isEmpty,
+          );
+          final bool hasItemWithNoPrice = state.itemsModel.any(
+            (item) => item.price <= 0,
+          );
+          final bool hasItemWithNoPerson = state.itemsModel.any(
+            (item) => item.personIds.isEmpty,
+          );
+          final bool hasNoTaxValueWhenTaxIncludedIsFalse =
+              !state.isTaxIncluded && state.taxPercentage <= 0;
+
+          final bool isDisabled =
+              hasNoItem ||
+              hasNoPerson ||
+              hasItemWithNoName ||
+              hasItemWithNoPrice ||
+              hasItemWithNoPerson ||
+              hasNoTaxValueWhenTaxIncludedIsFalse;
+
           return Scaffold(
             appBar: AppAppBarWidget.back(
               onPressedBack: () => context.router.maybePop(),
@@ -60,11 +82,14 @@ class SplitScreen extends StatelessWidget {
                   Expanded(
                     child: AppFilledButtonWidget(
                       label: "Split",
-                      onPressed: () {
-                        context.read<SplitBloc>().add(
-                          const OnCalculateSplitEvent(),
-                        );
-                      },
+                      onPressed:
+                          isDisabled
+                              ? null
+                              : () {
+                                context.read<SplitBloc>().add(
+                                  const OnCalculateSplitEvent(),
+                                );
+                              },
                     ),
                   ),
                 ],
