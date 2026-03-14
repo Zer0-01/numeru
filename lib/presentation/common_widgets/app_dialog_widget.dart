@@ -1,34 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:numeru/presentation/common_widgets/buttons/app_filled_button_widget.dart';
 
 class AppDialogWidget extends StatelessWidget {
   final String? title;
   final String? subtitle;
-  final String? topButtonLabel;
-  final void Function()? onPressedTopButton;
+  final Widget? secondaryButton;
+  final Widget? primaryButton;
 
   const AppDialogWidget({
     super.key,
     this.title,
     this.subtitle,
-    this.topButtonLabel,
-    this.onPressedTopButton,
+    this.secondaryButton,
+    this.primaryButton,
+  });
+
+  const AppDialogWidget.alert({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.secondaryButton,
+    required this.primaryButton,
   });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (title != null) Text(title ?? ""),
-            if (subtitle != null) Text(subtitle ?? ""),
-            if (topButtonLabel != null && onPressedTopButton != null)
-              AppFilledButtonWidget(
-                label: topButtonLabel ?? "",
-                onPressed: onPressedTopButton,
+            if (title != null)
+              Text(
+                title!,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            if (subtitle != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                subtitle!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+            const SizedBox(height: 24),
+            if (secondaryButton != null || primaryButton != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                spacing: 8,
+                children: [
+                  if (secondaryButton != null)
+                    Expanded(child: secondaryButton!),
+                  if (primaryButton != null) Expanded(child: primaryButton!),
+                ],
               ),
           ],
         ),

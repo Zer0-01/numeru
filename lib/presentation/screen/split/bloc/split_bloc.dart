@@ -16,6 +16,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnAddPeopleEvent>(_onAddPeopleEvent);
     on<OnRemovePeopleEvent>(_onRemovePeopleEvent);
     on<OnAddItemEvent>(_onAddItemEvent);
+    on<OnRemoveItemEvent>(_onRemoveItemEvent);
     on<OnUpdateItemEvent>(_onUpdateItemEvent);
     on<OnToggleItemPersonEvent>(_onToggleItemPersonEvent);
     on<OnToggleAllItemPersonsEvent>(_onToggleAllItemPersonsEvent);
@@ -51,6 +52,14 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
     final updatedItems = List<ItemModel>.from(state.itemsModel);
     updatedItems.add(ItemModel(id: nextId, name: '', price: 0, personIds: []));
+
+    emit(state.copyWith(itemsModel: updatedItems));
+  }
+
+  void _onRemoveItemEvent(OnRemoveItemEvent event, Emitter<SplitState> emit) {
+    _logger.debug("OnRemoveItemEvent: ${event.itemId}");
+    final updatedItems =
+        state.itemsModel.where((item) => item.id != event.itemId).toList();
 
     emit(state.copyWith(itemsModel: updatedItems));
   }

@@ -26,6 +26,14 @@ class OnAddItemEvent extends SplitEvent {
   const OnAddItemEvent();
 }
 
+class OnRemoveItemEvent extends SplitEvent {
+  final int itemId;
+  const OnRemoveItemEvent(this.itemId);
+
+  @override
+  List<Object> get props => [itemId];
+}
+
 class OnUpdateItemEvent extends SplitEvent {
   final int id;
   final String? name;
