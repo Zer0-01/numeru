@@ -4,6 +4,9 @@ import 'package:numeru/constant/padding_constant.dart';
 import 'package:numeru/constant/sizes_constant.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
+import 'package:numeru/presentation/common_widgets/app_dialog_widget.dart';
+import 'package:numeru/presentation/common_widgets/buttons/app_filled_button_widget.dart';
+import 'package:numeru/presentation/common_widgets/buttons/app_outlined_button_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 import 'package:numeru/util/common_functions.dart';
 
@@ -192,8 +195,27 @@ class _WhoIsPayingWidgetState extends State<WhoIsPayingWidget> {
                     top: -2,
                     child: GestureDetector(
                       onTap: () {
-                        context.read<SplitBloc>().add(
-                          OnRemovePeopleEvent(person.id),
+                        showDialog(
+                          context: context,
+                          builder:
+                              (dialogContext) => AppDialogWidget.alert(
+                                title: "Remove Person",
+                                subtitle:
+                                    "Are you sure you want to remove ${person.name}?",
+                                secondaryButton: AppOutlinedButtonWidget(
+                                  label: "Cancel",
+                                  onPressed: () => Navigator.pop(dialogContext),
+                                ),
+                                primaryButton: AppFilledButtonWidget(
+                                  label: "Remove",
+                                  onPressed: () {
+                                    context.read<SplitBloc>().add(
+                                      OnRemovePeopleEvent(person.id),
+                                    );
+                                    Navigator.pop(dialogContext);
+                                  },
+                                ),
+                              ),
                         );
                       },
                       child: Container(
