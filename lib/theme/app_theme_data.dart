@@ -106,6 +106,18 @@ class AppFilledButtonThemeData {
   static FilledButtonThemeData light(ColorScheme scheme) {
     return FilledButtonThemeData(
       style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return scheme.primary.withValues(alpha: 0.5);
+          }
+          return scheme.primary;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return scheme.onPrimary.withValues(alpha: 0.5);
+          }
+          return scheme.onPrimary;
+        }),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
@@ -119,6 +131,7 @@ class AppOutlinedButtonThemeData {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        backgroundColor: scheme.surfaceContainerLowest,
       ).copyWith(
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
@@ -128,13 +141,13 @@ class AppOutlinedButtonThemeData {
         }),
         side: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return BorderSide(color: scheme.primary.withValues(alpha: 0.2));
+            return BorderSide(color: scheme.primary.withValues(alpha: 0.5));
           }
           return BorderSide(color: scheme.primary);
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return scheme.primary.withValues(alpha: 0.2);
+            return scheme.primary.withValues(alpha: 0.5);
           }
           return scheme.primary;
         }),
