@@ -55,19 +55,29 @@ class ItemCardWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Price",
-                    prefixIcon: Icon(Icons.attach_money_rounded, size: 18),
-                  ),
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  initialValue: item.price > 0 ? item.price.toString() : "",
-                  onChanged: (val) {
-                    final price = double.tryParse(val) ?? 0.0;
-                    context.read<SplitBloc>().add(
-                      OnUpdateItemEvent(id: item.id, price: price),
+                child: BlocBuilder<SplitBloc, SplitState>(
+                  buildWhen: (previous, current) => previous.taxMode != current.taxMode,
+                  builder: (context, state) {
+                    return TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Price",
+                        prefixIcon: const Icon(Icons.attach_money_rounded, size: 18),
+                        suffixText: state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
+                        suffixStyle: context.textTheme.bodySmall?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                          fontSize: 10,
+                        ),
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      initialValue: item.price > 0 ? item.price.toString() : "",
+                      onChanged: (val) {
+                        final price = double.tryParse(val) ?? 0.0;
+                        context.read<SplitBloc>().add(
+                          OnUpdateItemEvent(id: item.id, price: price),
+                        );
+                      },
                     );
                   },
                 ),
@@ -107,6 +117,57 @@ class ItemCardWidget extends StatelessWidget {
                   backgroundColor: context.colorScheme.errorContainer
                       .withValues(alpha: 0.5),
                 ),
+              ),
+            ],
+          ),
+          Row(
+            spacing: 12,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Text(
+                      "Qty:",
+                      style: context.textTheme.labelMedium?.copyWith(
+                        color: context.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 50,
+                      child: TextFormField(
+                        decoration: const InputDecoration(hintText: "1"),
+                        initialValue: item.quantity.toString(),
+                        keyboardType: TextInputType.number,
+                        onChanged: (val) {
+                          final qty = int.tryParse(val) ?? 1;
+                          context.read<SplitBloc>().add(
+                            OnUpdateItemEvent(id: item.id, quantity: qty),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Taxable",
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: context.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Checkbox(
+                    value: item.isTaxable,
+                    onChanged: (val) {
+                      context.read<SplitBloc>().add(
+                        OnUpdateItemEvent(id: item.id, isTaxable: val ?? true),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

@@ -40,51 +40,97 @@ class ReceiptSettingsWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Price includes tax?",
+                        "Tax Mode",
                         style: context.textTheme.labelMedium?.copyWith(
                           color: context.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      Switch(
-                        value: state.isTaxIncluded,
-                        onChanged: (val) {
+                      SegmentedButton<String>(
+                        segments: const [
+                          ButtonSegment(
+                            value: "INCLUSIVE",
+                            label: Text("Incl."),
+                            tooltip: "Price includes SST",
+                          ),
+                          ButtonSegment(
+                            value: "EXCLUSIVE",
+                            label: Text("Excl."),
+                            tooltip: "SST added separately",
+                          ),
+                        ],
+                        selected: {state.taxMode},
+                        onSelectionChanged: (Set<String> newSelection) {
                           context.read<SplitBloc>().add(
-                            OnToggleTaxIncludedEvent(val),
+                            OnUpdateTaxModeEvent(newSelection.first),
                           );
                         },
                       ),
                     ],
                   ),
-                  if (!state.isTaxIncluded) ...[
-                    const Divider(height: 1),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Tax Value (%)",
-                          style: context.textTheme.labelMedium?.copyWith(
-                            color: context.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: TextFormField(
-                            decoration: const InputDecoration(hintText: "0"),
-                            initialValue: state.taxPercentage.toString(),
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            onChanged: (val) {
-                              final tax = double.tryParse(val) ?? 0.0;
-                              context.read<SplitBloc>().add(
-                                OnUpdateTaxValueEvent(tax),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                  if (state.taxMode == "INCLUSIVE")
+                    Text(
+                      "Price includes SST",
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.primary,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
-                  ],
+                  const Divider(height: 1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Tax Value (%)",
+                        style: context.textTheme.labelMedium?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        child: TextFormField(
+                          decoration: const InputDecoration(hintText: "0"),
+                          initialValue: state.taxPercentage.toString(),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          onChanged: (val) {
+                            final tax = double.tryParse(val) ?? 0.0;
+                            context.read<SplitBloc>().add(
+                              OnUpdateTaxValueEvent(tax),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Service Charge (%)",
+                        style: context.textTheme.labelMedium?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        child: TextFormField(
+                          decoration: const InputDecoration(hintText: "10"),
+                          initialValue: state.serviceChargeRate.toString(),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          onChanged: (val) {
+                            final sc = double.tryParse(val) ?? 0.0;
+                            context.read<SplitBloc>().add(
+                              OnUpdateServiceChargeRateEvent(sc),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

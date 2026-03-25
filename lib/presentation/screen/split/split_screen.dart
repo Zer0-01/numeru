@@ -35,8 +35,8 @@ class SplitScreen extends StatelessWidget {
           final bool hasItemWithNoPerson = state.itemsModel.any(
             (item) => item.personIds.isEmpty,
           );
-          final bool hasNoTaxValueWhenTaxIncludedIsFalse =
-              !state.isTaxIncluded && state.taxPercentage <= 0;
+          final bool hasNoTaxValueWhenTaxModeIsExclusive =
+              state.taxMode == "EXCLUSIVE" && state.taxPercentage <= 0;
 
           final bool isDisabled =
               hasNoItem ||
@@ -44,7 +44,7 @@ class SplitScreen extends StatelessWidget {
               hasItemWithNoName ||
               hasItemWithNoPrice ||
               hasItemWithNoPerson ||
-              hasNoTaxValueWhenTaxIncludedIsFalse;
+              hasNoTaxValueWhenTaxModeIsExclusive;
 
           return Scaffold(
             appBar: AppBar(

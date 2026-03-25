@@ -21,16 +21,22 @@ class SplitSummaryModel extends Equatable {
   final double subtotal;
   final double taxAmount;
   final double taxPercentage;
+  final double serviceChargeAmount;
+  final double includedTaxAmount;
   final double totalAmount;
   final double roundingAmount;
+  final String taxMode;
   final List<PersonSummaryModel> personSummaries;
 
   const SplitSummaryModel({
     required this.subtotal,
     required this.taxAmount,
     required this.taxPercentage,
+    required this.serviceChargeAmount,
+    required this.includedTaxAmount,
     required this.totalAmount,
     required this.roundingAmount,
+    required this.taxMode,
     required this.personSummaries,
   });
 
@@ -39,8 +45,11 @@ class SplitSummaryModel extends Equatable {
     subtotal,
     taxAmount,
     taxPercentage,
+    serviceChargeAmount,
+    includedTaxAmount,
     totalAmount,
     roundingAmount,
+    taxMode,
     personSummaries,
   ];
 }

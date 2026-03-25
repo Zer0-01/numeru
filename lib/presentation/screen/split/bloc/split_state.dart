@@ -6,16 +6,18 @@ class SplitState extends Equatable {
   final SplitStatus splitStatus;
   final List<PersonModel> peopleModel;
   final List<ItemModel> itemsModel;
-  final bool isTaxIncluded;
+  final String taxMode; // INCLUSIVE | EXCLUSIVE
   final double taxPercentage;
+  final double serviceChargeRate;
   final SplitSummaryModel? summaryModel;
 
   const SplitState({
     this.splitStatus = SplitStatus.initial,
     this.peopleModel = const [],
     this.itemsModel = const [],
-    this.isTaxIncluded = true,
-    this.taxPercentage = 10,
+    this.taxMode = "INCLUSIVE",
+    this.taxPercentage = 6,
+    this.serviceChargeRate = 0.10,
     this.summaryModel,
   });
 
@@ -23,16 +25,18 @@ class SplitState extends Equatable {
     SplitStatus? splitStatus,
     List<PersonModel>? peopleModel,
     List<ItemModel>? itemsModel,
-    bool? isTaxIncluded,
+    String? taxMode,
     double? taxPercentage,
+    double? serviceChargeRate,
     SplitSummaryModel? summaryModel,
   }) {
     return SplitState(
       splitStatus: splitStatus ?? this.splitStatus,
       peopleModel: peopleModel ?? this.peopleModel,
       itemsModel: itemsModel ?? this.itemsModel,
-      isTaxIncluded: isTaxIncluded ?? this.isTaxIncluded,
+      taxMode: taxMode ?? this.taxMode,
       taxPercentage: taxPercentage ?? this.taxPercentage,
+      serviceChargeRate: serviceChargeRate ?? this.serviceChargeRate,
       summaryModel: summaryModel ?? this.summaryModel,
     );
   }
@@ -42,8 +46,9 @@ class SplitState extends Equatable {
     splitStatus,
     peopleModel,
     itemsModel,
-    isTaxIncluded,
+    taxMode,
     taxPercentage,
+    serviceChargeRate,
     summaryModel,
   ];
 }

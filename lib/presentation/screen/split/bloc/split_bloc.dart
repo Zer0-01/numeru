@@ -18,10 +18,13 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnAddItemEvent>(_onAddItemEvent);
     on<OnRemoveItemEvent>(_onRemoveItemEvent);
     on<OnUpdateItemEvent>(_onUpdateItemEvent);
+    on<OnUpdateItemQuantityEvent>(_onUpdateItemQuantityEvent);
+    on<OnToggleItemTaxableEvent>(_onToggleItemTaxableEvent);
     on<OnToggleItemPersonEvent>(_onToggleItemPersonEvent);
     on<OnToggleAllItemPersonsEvent>(_onToggleAllItemPersonsEvent);
-    on<OnToggleTaxIncludedEvent>(_onToggleTaxIncludedEvent);
+    on<OnUpdateTaxModeEvent>(_onUpdateTaxModeEvent);
     on<OnUpdateTaxValueEvent>(_onUpdateTaxValueEvent);
+    on<OnUpdateServiceChargeRateEvent>(_onUpdateServiceChargeRateEvent);
     on<OnCalculateSplitEvent>(_onCalculateSplitEvent);
   }
 
@@ -51,7 +54,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
                 1;
 
     final updatedItems = List<ItemModel>.from(state.itemsModel);
-    updatedItems.add(ItemModel(id: nextId, name: '', price: 0, personIds: []));
+    updatedItems.add(
+      ItemModel(id: nextId, name: '', price: 0, personIds: []),
+    );
 
     emit(state.copyWith(itemsModel: updatedItems));
   }
@@ -69,7 +74,44 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     final updatedItems =
         state.itemsModel.map((item) {
           if (item.id == event.id) {
-            return item.copyWith(name: event.name, price: event.price);
+            return item.copyWith(
+              name: event.name,
+              price: event.price,
+              quantity: event.quantity,
+              isTaxable: event.isTaxable,
+            );
+          }
+          return item;
+        }).toList();
+
+    emit(state.copyWith(itemsModel: updatedItems));
+  }
+
+  void _onUpdateItemQuantityEvent(
+    OnUpdateItemQuantityEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    _logger.debug("OnUpdateItemQuantityEvent: ${event.id}");
+    final updatedItems =
+        state.itemsModel.map((item) {
+          if (item.id == event.id) {
+            return item.copyWith(quantity: event.quantity);
+          }
+          return item;
+        }).toList();
+
+    emit(state.copyWith(itemsModel: updatedItems));
+  }
+
+  void _onToggleItemTaxableEvent(
+    OnToggleItemTaxableEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    _logger.debug("OnToggleItemTaxableEvent: ${event.id}");
+    final updatedItems =
+        state.itemsModel.map((item) {
+          if (item.id == event.id) {
+            return item.copyWith(isTaxable: event.isTaxable);
           }
           return item;
         }).toList();
@@ -133,12 +175,12 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(peopleModel: updatedPeople));
   }
 
-  void _onToggleTaxIncludedEvent(
-    OnToggleTaxIncludedEvent event,
+  void _onUpdateTaxModeEvent(
+    OnUpdateTaxModeEvent event,
     Emitter<SplitState> emit,
   ) {
-    _logger.debug("OnToggleTaxIncludedEvent: ${event.isTaxIncluded}");
-    emit(state.copyWith(isTaxIncluded: event.isTaxIncluded));
+    _logger.debug("OnUpdateTaxModeEvent: ${event.taxMode}");
+    emit(state.copyWith(taxMode: event.taxMode));
   }
 
   void _onUpdateTaxValueEvent(
@@ -149,48 +191,81 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(taxPercentage: event.taxPercentage));
   }
 
+  void _onUpdateServiceChargeRateEvent(
+    OnUpdateServiceChargeRateEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    _logger.debug("OnUpdateServiceChargeRateEvent: ${event.serviceChargeRate}");
+    emit(state.copyWith(serviceChargeRate: event.serviceChargeRate));
+  }
+
   void _onCalculateSplitEvent(
     OnCalculateSplitEvent event,
     Emitter<SplitState> emit,
   ) {
     _logger.debug("OnCalculateSplitEvent");
 
-    // 1. Calculate Subtotal
-    final double subtotal = state.itemsModel.fold(
-      0,
-      (sum, item) => sum + item.price,
-    );
+    final double taxRate = state.taxPercentage / 100;
+    final double serviceChargeRate = state.serviceChargeRate / 100;
+    final bool isInclusive = state.taxMode == "INCLUSIVE";
 
-    // 2. Calculate Tax
-    double taxAmount = 0;
-    if (state.isTaxIncluded) {
-      taxAmount = subtotal - (subtotal / (1 + state.taxPercentage / 100));
-    } else {
-      taxAmount = subtotal * (state.taxPercentage / 100);
+    // 1. Calculate Subtotal and Tax Portions
+    double subtotal = 0;
+    double taxableAmount = 0;
+    double includedTaxAmount = 0;
+
+    for (var item in state.itemsModel) {
+      final double itemTotal = item.price * item.quantity;
+      subtotal += itemTotal;
+      if (item.isTaxable) {
+        taxableAmount += itemTotal;
+        if (isInclusive) {
+          final double basePrice = item.price / (1 + taxRate);
+          includedTaxAmount += (item.price - basePrice) * item.quantity;
+        }
+      }
     }
 
-    // 3. Calculate Total
-    final double totalBeforeRounding =
-        state.isTaxIncluded ? subtotal : (subtotal + taxAmount);
-    final double totalAmount = totalBeforeRounding.roundToDouble();
-    final double roundingAmount = totalAmount - totalBeforeRounding;
+    // 2. Calculate Tax and Service Charge
+    double taxAmount = 0;
+    if (isInclusive) {
+      taxAmount = includedTaxAmount;
+    } else {
+      taxAmount = taxableAmount * taxRate;
+    }
+
+    final double serviceChargeAmount = subtotal * serviceChargeRate;
+
+    // 3. Final Total
+    final double finalTotalRaw =
+        isInclusive
+            ? (subtotal + serviceChargeAmount)
+            : (subtotal + serviceChargeAmount + taxAmount);
+    final double finalTotal = (finalTotalRaw * 100).round() / 100;
+    final double roundingAmount = finalTotal - finalTotalRaw;
 
     // 4. Calculate Person Breakdown
-    final Map<int, double> personSubtotals = {};
+    final Map<int, double> personBaseShares = {};
+    final Map<int, double> personTaxableShares = {};
     final Map<int, List<String>> personItems = {};
 
     for (var person in state.peopleModel) {
-      personSubtotals[person.id] = 0;
+      personBaseShares[person.id] = 0;
+      personTaxableShares[person.id] = 0;
       personItems[person.id] = [];
     }
 
     for (var item in state.itemsModel) {
       if (item.personIds.isEmpty) continue;
 
-      final double share = item.price / item.personIds.length;
+      final double share = (item.price * item.quantity) / item.personIds.length;
       for (var personId in item.personIds) {
-        if (personSubtotals.containsKey(personId)) {
-          personSubtotals[personId] = (personSubtotals[personId] ?? 0) + share;
+        if (personBaseShares.containsKey(personId)) {
+          personBaseShares[personId] = (personBaseShares[personId] ?? 0) + share;
+          if (item.isTaxable) {
+            personTaxableShares[personId] =
+                (personTaxableShares[personId] ?? 0) + share;
+          }
           personItems[personId]?.add(
             item.name.isEmpty ? "Unnamed Item" : item.name,
           );
@@ -198,27 +273,56 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       }
     }
 
-    // Pro-rata total adjustment (multiplier)
-    // Avoid division by zero if subtotal is 0
-    final double multiplier = subtotal > 0 ? totalAmount / subtotal : 0;
+    // Calculate individual totals
+    double runningSplitTotal = 0;
+    final List<PersonSummaryModel> personSummaries = [];
 
-    final List<PersonSummaryModel> personSummaries =
-        state.peopleModel.map((person) {
-          final double personBase = personSubtotals[person.id] ?? 0;
-          return PersonSummaryModel(
-            id: person.id,
-            name: person.name,
-            totalAmount: personBase * multiplier,
-            itemNames: personItems[person.id] ?? [],
-          );
-        }).toList();
+    for (int i = 0; i < state.peopleModel.length; i++) {
+      final person = state.peopleModel[i];
+      final double baseShare = personBaseShares[person.id] ?? 0;
+      final double taxableShare = personTaxableShares[person.id] ?? 0;
+
+      double personTax = 0;
+      if (isInclusive) {
+        // In inclusive mode, tax is already in baseShare
+        personTax = 0; // Display portion not added
+      } else {
+        personTax = taxableShare * taxRate;
+      }
+
+      final double personServiceCharge = baseShare * serviceChargeRate;
+      double personTotal =
+          isInclusive
+              ? (baseShare + personServiceCharge)
+              : (baseShare + personServiceCharge + personTax);
+
+      // Rounding adjustment on the last person
+      if (i == state.peopleModel.length - 1) {
+        personTotal = finalTotal - runningSplitTotal;
+      } else {
+        personTotal = (personTotal * 100).round() / 100;
+        runningSplitTotal += personTotal;
+      }
+
+      personSummaries.add(
+        PersonSummaryModel(
+          id: person.id,
+          name: person.name,
+          totalAmount: personTotal,
+          itemNames: personItems[person.id] ?? [],
+        ),
+      );
+    }
 
     final summary = SplitSummaryModel(
       subtotal: subtotal,
       taxAmount: taxAmount,
       taxPercentage: state.taxPercentage,
-      totalAmount: totalAmount,
+      serviceChargeAmount: serviceChargeAmount,
+      includedTaxAmount: includedTaxAmount,
+      totalAmount: finalTotal,
       roundingAmount: roundingAmount,
+      taxMode: state.taxMode,
       personSummaries: personSummaries,
     );
 

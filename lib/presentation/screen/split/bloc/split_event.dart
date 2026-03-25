@@ -34,17 +34,6 @@ class OnRemoveItemEvent extends SplitEvent {
   List<Object> get props => [itemId];
 }
 
-class OnUpdateItemEvent extends SplitEvent {
-  final int id;
-  final String? name;
-  final double? price;
-
-  const OnUpdateItemEvent({required this.id, this.name, this.price});
-
-  @override
-  List<Object> get props => [id, name ?? '', price ?? 0.0];
-}
-
 class OnToggleItemPersonEvent extends SplitEvent {
   final int itemId;
   final int personId;
@@ -68,13 +57,58 @@ class OnToggleAllItemPersonsEvent extends SplitEvent {
   List<Object> get props => [itemId, isShared];
 }
 
-class OnToggleTaxIncludedEvent extends SplitEvent {
-  final bool isTaxIncluded;
+class OnUpdateItemEvent extends SplitEvent {
+  final int id;
+  final String? name;
+  final double? price;
+  final int? quantity;
+  final bool? isTaxable;
 
-  const OnToggleTaxIncludedEvent(this.isTaxIncluded);
+  const OnUpdateItemEvent({
+    required this.id,
+    this.name,
+    this.price,
+    this.quantity,
+    this.isTaxable,
+  });
 
   @override
-  List<Object> get props => [isTaxIncluded];
+  List<Object> get props => [
+    id,
+    name ?? '',
+    price ?? 0.0,
+    quantity ?? 1,
+    isTaxable ?? true,
+  ];
+}
+
+class OnUpdateItemQuantityEvent extends SplitEvent {
+  final int id;
+  final int quantity;
+
+  const OnUpdateItemQuantityEvent({required this.id, required this.quantity});
+
+  @override
+  List<Object> get props => [id, quantity];
+}
+
+class OnToggleItemTaxableEvent extends SplitEvent {
+  final int id;
+  final bool isTaxable;
+
+  const OnToggleItemTaxableEvent({required this.id, required this.isTaxable});
+
+  @override
+  List<Object> get props => [id, isTaxable];
+}
+
+class OnUpdateTaxModeEvent extends SplitEvent {
+  final String taxMode;
+
+  const OnUpdateTaxModeEvent(this.taxMode);
+
+  @override
+  List<Object> get props => [taxMode];
 }
 
 class OnUpdateTaxValueEvent extends SplitEvent {
@@ -84,6 +118,15 @@ class OnUpdateTaxValueEvent extends SplitEvent {
 
   @override
   List<Object> get props => [taxPercentage];
+}
+
+class OnUpdateServiceChargeRateEvent extends SplitEvent {
+  final double serviceChargeRate;
+
+  const OnUpdateServiceChargeRateEvent(this.serviceChargeRate);
+
+  @override
+  List<Object> get props => [serviceChargeRate];
 }
 
 class OnCalculateSplitEvent extends SplitEvent {
