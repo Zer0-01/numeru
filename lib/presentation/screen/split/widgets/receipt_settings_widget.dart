@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_switch_widget.dart';
-import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 
 class ReceiptSettingsWidget extends StatelessWidget {
@@ -47,7 +45,7 @@ class ReceiptSettingsWidget extends StatelessWidget {
                           color: context.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      AppSwitchWidget(
+                      Switch(
                         value: state.isTaxIncluded,
                         onChanged: (val) {
                           context.read<SplitBloc>().add(
@@ -70,8 +68,8 @@ class ReceiptSettingsWidget extends StatelessWidget {
                         ),
                         SizedBox(
                           width: 80,
-                          child: AppTextFieldWidget(
-                            hint: "0",
+                          child: TextFormField(
+                            decoration: const InputDecoration(hintText: "0"),
                             initialValue: state.taxPercentage.toString(),
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,

@@ -3,12 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numeru/data/models/item_model.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_chip_widget.dart';
-import 'package:numeru/presentation/common_widgets/app_dialog_widget.dart';
-import 'package:numeru/presentation/common_widgets/app_switch_widget.dart';
-import 'package:numeru/presentation/common_widgets/app_text_field_widget.dart';
-import 'package:numeru/presentation/common_widgets/buttons/app_filled_button_widget.dart';
-import 'package:numeru/presentation/common_widgets/buttons/app_outlined_button_widget.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
 
 class ItemCardWidget extends StatelessWidget {
@@ -50,8 +44,8 @@ class ItemCardWidget extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: AppTextFieldWidget(
-                  hint: "Item Name",
+                child: TextFormField(
+                  decoration: const InputDecoration(hintText: "Item Name"),
                   initialValue: item.name,
                   onChanged: (val) {
                     context.read<SplitBloc>().add(
@@ -61,13 +55,15 @@ class ItemCardWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: AppTextFieldWidget(
-                  hint: "Price",
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Price",
+                    prefixIcon: Icon(Icons.attach_money_rounded, size: 18),
+                  ),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
                   initialValue: item.price > 0 ? item.price.toString() : "",
-                  prefixIcon: const Icon(Icons.attach_money_rounded, size: 18),
                   onChanged: (val) {
                     final price = double.tryParse(val) ?? 0.0;
                     context.read<SplitBloc>().add(
@@ -81,22 +77,26 @@ class ItemCardWidget extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder:
-                        (dialogContext) => AppDialogWidget.alert(
-                          title: "Remove Item",
-                          subtitle: "Are you sure you want to remove this item?",
-                          secondaryButton: AppOutlinedButtonWidget(
-                            label: "Cancel",
-                            onPressed: () => Navigator.pop(dialogContext),
+                        (dialogContext) => AlertDialog(
+                          title: const Text("Remove Item"),
+                          content: const Text(
+                            "Are you sure you want to remove this item?",
                           ),
-                          primaryButton: AppFilledButtonWidget(
-                            label: "Remove",
-                            onPressed: () {
-                              context.read<SplitBloc>().add(
-                                OnRemoveItemEvent(item.id),
-                              );
-                              Navigator.pop(dialogContext);
-                            },
-                          ),
+                          actions: [
+                            OutlinedButton(
+                              onPressed: () => Navigator.pop(dialogContext),
+                              child: const Text("Cancel"),
+                            ),
+                            FilledButton(
+                              onPressed: () {
+                                context.read<SplitBloc>().add(
+                                  OnRemoveItemEvent(item.id),
+                                );
+                                Navigator.pop(dialogContext);
+                              },
+                              child: const Text("Remove"),
+                            ),
+                          ],
                         ),
                   );
                 },
@@ -104,9 +104,8 @@ class ItemCardWidget extends StatelessWidget {
                 icon: const Icon(Icons.delete_outline_rounded),
                 style: IconButton.styleFrom(
                   foregroundColor: context.colorScheme.error,
-                  backgroundColor: context.colorScheme.errorContainer.withValues(
-                    alpha: 0.5,
-                  ),
+                  backgroundColor: context.colorScheme.errorContainer
+                      .withValues(alpha: 0.5),
                 ),
               ),
             ],
@@ -131,9 +130,10 @@ class ItemCardWidget extends StatelessWidget {
                         final bool isSelected = item.personIds.contains(
                           person.id,
                         );
-                        return AppChipWidget(
-                          label: person.name,
+                        return FilterChip(
+                          label: Text(person.name),
                           selected: isSelected,
+                          showCheckmark: false,
                           onSelected: (_) {
                             context.read<SplitBloc>().add(
                               OnToggleItemPersonEvent(
@@ -158,7 +158,7 @@ class ItemCardWidget extends StatelessWidget {
                   color: context.colorScheme.onSurfaceVariant,
                 ),
               ),
-              AppSwitchWidget(
+              Switch(
                 value: isSharedToAll,
                 onChanged: (val) {
                   context.read<SplitBloc>().add(

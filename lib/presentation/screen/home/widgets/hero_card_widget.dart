@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:numeru/extensions/context_extension.dart';
 
-class AppHeroWidget extends StatelessWidget {
+class HeroCardWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
   final String imageUrl;
@@ -9,7 +9,7 @@ class AppHeroWidget extends StatelessWidget {
   final String? subtitle;
   final String? label;
 
-  const AppHeroWidget({
+  const HeroCardWidget({
     super.key,
     this.padding,
     this.borderRadius,
@@ -32,7 +32,7 @@ class AppHeroWidget extends StatelessWidget {
       child: Container(
         padding: padding ?? const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          borderRadius: borderRadius ?? BorderRadius.circular(16),
+          borderRadius: borderRadius ?? BorderRadius.circular(12),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

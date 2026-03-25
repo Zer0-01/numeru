@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:numeru/constant/sizes_constant.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_hero_widget.dart';
+import 'package:numeru/presentation/screen/home/widgets/hero_card_widget.dart';
 
 class GreetWidget extends StatelessWidget {
   const GreetWidget({super.key});
@@ -25,9 +24,10 @@ class GreetWidget extends StatelessWidget {
               color: context.colorScheme.onSurfaceVariant,
             ),
           ),
+          const SizedBox(height: 16),
           SizedBox(
-            height: SizesConstant.heightPercentage(context, 20),
-            child: AppHeroWidget(
+            height: 160,
+            child: HeroCardWidget(
               imageUrl:
                   "https://images.pexels.com/photos/128867/coins-currency-investment-insurance-128867.jpeg",
               title: context.l10n.split_your_bill_fairly,

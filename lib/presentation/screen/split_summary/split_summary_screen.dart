@@ -2,7 +2,6 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/data/models/split_summary_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_app_bar_widget.dart';
 
 @RoutePage()
 class SplitSummaryScreen extends StatelessWidget {
@@ -13,9 +12,12 @@ class SplitSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppAppBarWidget.back(
-        title: "Split Summary",
-        onPressedBack: () => Navigator.of(context).pop(),
+      appBar: AppBar(
+        title: const Text("Split Summary"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: CustomScrollView(
         slivers: [
@@ -29,7 +31,7 @@ class SplitSummaryScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverToBoxAdapter(
               child: Text(
-                "Person Breakdown",
+                "Person Summary",
                 style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -38,16 +40,22 @@ class SplitSummaryScreen extends StatelessWidget {
           ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
-            sliver: SliverList.separated(
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemCount: summary.personSummaries.length,
-              itemBuilder: (context, index) {
-                final person = summary.personSummaries[index];
-                return _PersonSummaryCard(person: person);
-              },
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final person = summary.personSummaries[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _PersonSummaryCard(person: person),
+                  );
+                },
+                childCount: summary.personSummaries.length,
+              ),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 32),
+          ),
         ],
       ),
     );
@@ -55,7 +63,7 @@ class SplitSummaryScreen extends StatelessWidget {
 }
 
 class _GeneralInfoCard extends StatelessWidget {
-  final dynamic summary;
+  final SplitSummaryModel summary;
 
   const _GeneralInfoCard({required this.summary});
 
@@ -68,25 +76,25 @@ class _GeneralInfoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 8,
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        spacing: 12,
         children: [
-          _InfoRow(label: "Subtotal", value: summary.subtotal),
           _InfoRow(
-            label: "Tax (${summary.taxPercentage.toStringAsFixed(0)}%)",
+            label: "Subtotal",
+            value: summary.subtotal,
+          ),
+          _InfoRow(
+            label: "Tax (${summary.taxPercentage}%)",
             value: summary.taxAmount,
           ),
-          if (summary.roundingAmount != 0)
-            _InfoRow(label: "Rounding", value: summary.roundingAmount),
-          const Divider(),
+          const Divider(height: 24),
           _InfoRow(
-            label: "Total Amount",
+            label: "Total",
             value: summary.totalAmount,
             isTotal: true,
           ),
@@ -97,7 +105,7 @@ class _GeneralInfoCard extends StatelessWidget {
 }
 
 class _PersonSummaryCard extends StatelessWidget {
-  final dynamic person;
+  final PersonSummaryModel person;
 
   const _PersonSummaryCard({required this.person});
 
@@ -106,43 +114,42 @@ class _PersonSummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(16),
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+          color: context.colorScheme.outlineVariant,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 person.name,
-                style: context.textTheme.titleSmall?.copyWith(
+                style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "\$${person.totalAmount.toStringAsFixed(2)}",
-                style: context.textTheme.titleSmall?.copyWith(
+                person.totalAmount.toString(),
+                style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colorScheme.primary,
                 ),
               ),
             ],
           ),
-          if (person.itemNames.isNotEmpty)
-            Text(
-              person.itemNames.join(", "),
-              style: context.textTheme.bodySmall?.copyWith(
-                color: context.colorScheme.onSurfaceVariant,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+          const SizedBox(height: 8),
+          Text(
+            person.itemNames.join(", "),
+            style: context.textTheme.bodySmall?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );
@@ -167,26 +174,24 @@ class _InfoRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style:
-              isTotal
-                  ? context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  )
-                  : context.textTheme.bodyMedium?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                  ),
+          style: isTotal
+              ? context.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                )
+              : context.textTheme.bodyMedium?.copyWith(
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
         ),
         Text(
-          "\$${value.toStringAsFixed(2)}",
-          style:
-              isTotal
-                  ? context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colorScheme.primary,
-                  )
-                  : context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+          value.toStringAsFixed(2),
+          style: isTotal
+              ? context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: context.colorScheme.primary,
+                )
+              : context.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
         ),
       ],
     );

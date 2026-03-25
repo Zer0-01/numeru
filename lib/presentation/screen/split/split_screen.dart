@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/extensions/context_extension.dart';
-import 'package:numeru/presentation/common_widgets/app_app_bar_widget.dart';
-import 'package:numeru/presentation/common_widgets/app_bottom_app_bar_widget.dart';
-import 'package:numeru/presentation/common_widgets/buttons/app_filled_button_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/item_list_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/receipt_settings_widget.dart';
 import 'package:numeru/presentation/screen/split/widgets/who_is_paying_widget.dart';
@@ -50,9 +47,12 @@ class SplitScreen extends StatelessWidget {
               hasNoTaxValueWhenTaxIncludedIsFalse;
 
           return Scaffold(
-            appBar: AppAppBarWidget.back(
-              onPressedBack: () => context.router.maybePop(),
-              title: "Split",
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () => context.router.maybePop(),
+                icon: const Icon(Icons.chevron_left),
+              ),
+              title: const Text("Split"),
             ),
             body: const CustomScrollView(
               slivers: [
@@ -61,7 +61,7 @@ class SplitScreen extends StatelessWidget {
                 ReceiptSettingsWidget(),
               ],
             ),
-            bottomNavigationBar: AppBottomAppBarWidget(
+            bottomNavigationBar: BottomAppBar(
               child: Row(
                 children: [
                   Expanded(
@@ -80,8 +80,7 @@ class SplitScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: AppFilledButtonWidget(
-                      label: "Split",
+                    child: FilledButton(
                       onPressed:
                           isDisabled
                               ? null
@@ -90,6 +89,7 @@ class SplitScreen extends StatelessWidget {
                                   const OnCalculateSplitEvent(),
                                 );
                               },
+                      child: const Text("Split"),
                     ),
                   ),
                 ],
