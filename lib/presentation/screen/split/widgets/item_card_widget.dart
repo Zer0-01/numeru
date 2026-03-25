@@ -83,7 +83,7 @@ class ItemCardWidget extends StatelessWidget {
                             "Are you sure you want to remove this item?",
                           ),
                           actions: [
-                            OutlinedButton(
+                            TextButton(
                               onPressed: () => Navigator.pop(dialogContext),
                               child: const Text("Cancel"),
                             ),
