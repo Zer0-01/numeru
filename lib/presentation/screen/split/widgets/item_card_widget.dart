@@ -54,34 +54,7 @@ class ItemCardWidget extends StatelessWidget {
                   },
                 ),
               ),
-              Expanded(
-                child: BlocBuilder<SplitBloc, SplitState>(
-                  buildWhen: (previous, current) => previous.taxMode != current.taxMode,
-                  builder: (context, state) {
-                    return TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Price",
-                        prefixIcon: const Icon(Icons.attach_money_rounded, size: 18),
-                        suffixText: state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
-                        suffixStyle: context.textTheme.bodySmall?.copyWith(
-                          color: context.colorScheme.onSurfaceVariant,
-                          fontSize: 10,
-                        ),
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      initialValue: item.price > 0 ? item.price.toString() : "",
-                      onChanged: (val) {
-                        final price = double.tryParse(val) ?? 0.0;
-                        context.read<SplitBloc>().add(
-                          OnUpdateItemEvent(id: item.id, price: price),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
+
               IconButton.filledTonal(
                 onPressed: () {
                   showDialog(
@@ -119,6 +92,33 @@ class ItemCardWidget extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          BlocBuilder<SplitBloc, SplitState>(
+            buildWhen:
+                (previous, current) => previous.taxMode != current.taxMode,
+            builder: (context, state) {
+              return TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Price",
+                  prefixIcon: const Icon(Icons.attach_money_rounded, size: 18),
+                  suffixText: state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
+                  suffixStyle: context.textTheme.bodySmall?.copyWith(
+                    color: context.colorScheme.onSurfaceVariant,
+                    fontSize: 10,
+                  ),
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                initialValue: item.price > 0 ? item.price.toString() : "",
+                onChanged: (val) {
+                  final price = double.tryParse(val) ?? 0.0;
+                  context.read<SplitBloc>().add(
+                    OnUpdateItemEvent(id: item.id, price: price),
+                  );
+                },
+              );
+            },
           ),
           Row(
             spacing: 12,

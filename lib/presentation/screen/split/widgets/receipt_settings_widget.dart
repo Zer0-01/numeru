@@ -64,6 +64,7 @@ class ReceiptSettingsWidget extends StatelessWidget {
                             OnUpdateTaxModeEvent(newSelection.first),
                           );
                         },
+                        showSelectedIcon: false,
                       ),
                     ],
                   ),

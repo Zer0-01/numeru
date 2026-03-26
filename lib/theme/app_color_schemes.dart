@@ -20,6 +20,8 @@ class AppColorSchemes {
     surfaceContainerLow: Colors.grey.shade200,
     surfaceContainerHigh: Colors.grey.shade700,
     surfaceContainerHighest: Colors.black,
+    outline: Colors.black,
+    outlineVariant: Colors.grey.shade400,
   );
 
   static ColorScheme dark = ColorScheme(
