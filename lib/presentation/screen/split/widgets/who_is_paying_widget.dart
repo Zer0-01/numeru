@@ -163,7 +163,7 @@ class _WhoIsPayingWidgetState extends State<WhoIsPayingWidget> {
                                   "Are you sure you want to remove ${person.name}?",
                                 ),
                                 actions: [
-                                  OutlinedButton(
+                                  TextButton(
                                     onPressed:
                                         () => Navigator.pop(dialogContext),
                                     child: const Text("Cancel"),

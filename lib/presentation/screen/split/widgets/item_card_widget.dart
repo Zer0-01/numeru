@@ -55,7 +55,7 @@ class ItemCardWidget extends StatelessWidget {
                 ),
               ),
 
-              IconButton.filledTonal(
+              IconButton(
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -83,13 +83,16 @@ class ItemCardWidget extends StatelessWidget {
                         ),
                   );
                 },
-                iconSize: 20,
+
                 icon: const Icon(Icons.delete_outline_rounded),
                 style: IconButton.styleFrom(
                   foregroundColor: context.colorScheme.error,
-                  backgroundColor: context.colorScheme.errorContainer
-                      .withValues(alpha: 0.5),
                 ),
+                // style: IconButton.styleFrom(
+                //   foregroundColor: context.colorScheme.error,
+                //   backgroundColor: context.colorScheme.errorContainer
+                //       .withValues(alpha: 0.5),
+                // ),
               ),
             ],
           ),
