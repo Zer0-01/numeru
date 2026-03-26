@@ -77,6 +77,7 @@ class _WhoIsPayingWidgetState extends State<WhoIsPayingWidget> {
                   SizedBox(
                     height: SizesConstant.widthPercentage(context, 14) + 30,
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: AnimatedList(
@@ -92,51 +93,12 @@ class _WhoIsPayingWidgetState extends State<WhoIsPayingWidget> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Column(
-                          children: [
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                context.read<SplitBloc>().add(
-                                  const OnAddPeopleEvent(),
-                                );
-                              },
-                              child: Container(
-                                width: SizesConstant.widthPercentage(
-                                  context,
-                                  14,
-                                ),
-                                height: SizesConstant.widthPercentage(
-                                  context,
-                                  14,
-                                ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                      context.colorScheme.surfaceContainerLow,
-                                  border: Border.all(
-                                    color: context.colorScheme.outlineVariant,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add_rounded,
-                                    size: 20,
-                                    color: context.colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
+                        IconButton(
+                          onPressed:
+                              () => context.read<SplitBloc>().add(
+                                const OnAddPeopleEvent(),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "Add",
-                              style: context.textTheme.labelMedium?.copyWith(
-                                color: context.colorScheme.onSurfaceVariant,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                          icon: const Icon(Icons.add_rounded),
                         ),
                       ],
                     ),

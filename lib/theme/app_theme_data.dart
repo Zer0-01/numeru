@@ -12,6 +12,7 @@ import 'package:numeru/theme/app_outlined_button_theme_data.dart';
 import 'package:numeru/theme/app_switch_theme_data.dart';
 import 'package:numeru/theme/app_text_button_theme_data.dart';
 import 'package:numeru/theme/app_segmented_button_theme_data.dart';
+import 'package:numeru/theme/app_icon_button_theme_data.dart';
 
 class AppThemeData {
   static ThemeData light() {
@@ -33,6 +34,7 @@ class AppThemeData {
       bottomAppBarTheme: AppBottomAppBarTheme.light(scheme),
       chipTheme: AppChipThemeData.light(scheme),
       segmentedButtonTheme: AppSegmentedButtonThemeData.light(scheme),
+      iconButtonTheme: AppIconButtonThemeData.light(scheme),
     );
   }
 
@@ -55,6 +57,7 @@ class AppThemeData {
       dividerTheme: AppDividerThemeData.dark(scheme),
       bottomAppBarTheme: AppBottomAppBarTheme.dark(scheme),
       segmentedButtonTheme: AppSegmentedButtonThemeData.dark(scheme),
+      iconButtonTheme: AppIconButtonThemeData.dark(scheme),
     );
   }
 }
