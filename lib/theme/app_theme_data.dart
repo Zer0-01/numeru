@@ -37,6 +37,7 @@ class AppThemeData {
       segmentedButtonTheme: AppSegmentedButtonThemeData.light(scheme),
       iconButtonTheme: AppIconButtonThemeData.light(scheme),
       bottomSheetTheme: AppBottomSheetThemeData.light(scheme),
+      checkboxTheme: CheckboxThemeData(),
     );
   }
 
