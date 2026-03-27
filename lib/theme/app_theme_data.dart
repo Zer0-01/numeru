@@ -14,6 +14,7 @@ import 'package:numeru/theme/app_text_button_theme_data.dart';
 import 'package:numeru/theme/app_segmented_button_theme_data.dart';
 import 'package:numeru/theme/app_icon_button_theme_data.dart';
 import 'package:numeru/theme/app_bottom_sheet_theme_data.dart';
+import 'package:numeru/theme/app_checkbox_theme_data.dart';
 
 class AppThemeData {
   static ThemeData light() {
@@ -37,7 +38,7 @@ class AppThemeData {
       segmentedButtonTheme: AppSegmentedButtonThemeData.light(scheme),
       iconButtonTheme: AppIconButtonThemeData.light(scheme),
       bottomSheetTheme: AppBottomSheetThemeData.light(scheme),
-      checkboxTheme: CheckboxThemeData(),
+      checkboxTheme: AppCheckboxThemeData.light(scheme),
     );
   }
 
@@ -62,6 +63,7 @@ class AppThemeData {
       segmentedButtonTheme: AppSegmentedButtonThemeData.dark(scheme),
       iconButtonTheme: AppIconButtonThemeData.dark(scheme),
       bottomSheetTheme: AppBottomSheetThemeData.dark(scheme),
+      checkboxTheme: AppCheckboxThemeData.dark(scheme),
     );
   }
 }
