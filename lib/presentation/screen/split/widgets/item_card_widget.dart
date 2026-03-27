@@ -4,6 +4,7 @@ import 'package:numeru/data/models/item_model.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
+import 'package:numeru/presentation/screen/split/widgets/quantity_bottom_sheet_widget.dart';
 
 class ItemCardWidget extends StatelessWidget {
   final ItemModel item;
@@ -43,7 +44,6 @@ class ItemCardWidget extends StatelessWidget {
             spacing: 12,
             children: [
               Expanded(
-                flex: 2,
                 child: TextFormField(
                   decoration: const InputDecoration(hintText: "Item Name"),
                   initialValue: item.name,
@@ -54,74 +54,41 @@ class ItemCardWidget extends StatelessWidget {
                   },
                 ),
               ),
-
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (dialogContext) => AlertDialog(
-                          title: const Text("Remove Item"),
-                          content: const Text(
-                            "Are you sure you want to remove this item?",
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(dialogContext),
-                              child: const Text("Cancel"),
-                            ),
-                            FilledButton(
-                              onPressed: () {
-                                context.read<SplitBloc>().add(
-                                  OnRemoveItemEvent(item.id),
-                                );
-                                Navigator.pop(dialogContext);
-                              },
-                              child: const Text("Remove"),
-                            ),
-                          ],
+              Expanded(
+                child: BlocBuilder<SplitBloc, SplitState>(
+                  buildWhen:
+                      (previous, current) =>
+                          previous.taxMode != current.taxMode,
+                  builder: (context, state) {
+                    return TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Price",
+                        prefixIcon: const Icon(
+                          Icons.attach_money_rounded,
+                          size: 18,
                         ),
-                  );
-                },
-
-                icon: const Icon(Icons.delete_outline_rounded),
-                style: IconButton.styleFrom(
-                  foregroundColor: context.colorScheme.error,
+                        suffixText:
+                            state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
+                        suffixStyle: context.textTheme.bodySmall?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
+                          fontSize: 10,
+                        ),
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      initialValue: item.price > 0 ? item.price.toString() : "",
+                      onChanged: (val) {
+                        final price = double.tryParse(val) ?? 0.0;
+                        context.read<SplitBloc>().add(
+                          OnUpdateItemEvent(id: item.id, price: price),
+                        );
+                      },
+                    );
+                  },
                 ),
-                // style: IconButton.styleFrom(
-                //   foregroundColor: context.colorScheme.error,
-                //   backgroundColor: context.colorScheme.errorContainer
-                //       .withValues(alpha: 0.5),
-                // ),
               ),
             ],
-          ),
-          BlocBuilder<SplitBloc, SplitState>(
-            buildWhen:
-                (previous, current) => previous.taxMode != current.taxMode,
-            builder: (context, state) {
-              return TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Price",
-                  prefixIcon: const Icon(Icons.attach_money_rounded, size: 18),
-                  suffixText: state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
-                  suffixStyle: context.textTheme.bodySmall?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                    fontSize: 10,
-                  ),
-                ),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                initialValue: item.price > 0 ? item.price.toString() : "",
-                onChanged: (val) {
-                  final price = double.tryParse(val) ?? 0.0;
-                  context.read<SplitBloc>().add(
-                    OnUpdateItemEvent(id: item.id, price: price),
-                  );
-                },
-              );
-            },
           ),
           Row(
             spacing: 12,
@@ -136,18 +103,41 @@ class ItemCardWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    SizedBox(
-                      width: 50,
-                      child: TextFormField(
-                        decoration: const InputDecoration(hintText: "1"),
-                        initialValue: item.quantity.toString(),
-                        keyboardType: TextInputType.number,
-                        onChanged: (val) {
-                          final qty = int.tryParse(val) ?? 1;
+                    InkWell(
+                      onTap: () async {
+                        final qty = await showModalBottomSheet<int>(
+                          context: context,
+                          showDragHandle: true,
+                          builder: (context) {
+                            return QuantityBottomSheetWidget(
+                              selectedQuantity: item.quantity,
+                            );
+                          },
+                        );
+                        if (qty != null) {
                           context.read<SplitBloc>().add(
                             OnUpdateItemEvent(id: item.id, quantity: qty),
                           );
-                        },
+                        }
+                      },
+                      child: Container(
+                        width: 50,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: context.colorScheme.outlineVariant,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            item.quantity.toString(),
+                            style: context.textTheme.bodyMedium,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -231,6 +221,42 @@ class ItemCardWidget extends StatelessWidget {
                 },
               ),
             ],
+          ),
+          const Divider(height: 1),
+          TextButton.icon(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder:
+                    (dialogContext) => AlertDialog(
+                      title: const Text("Remove Item"),
+                      content: const Text(
+                        "Are you sure you want to remove this item?",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(dialogContext),
+                          child: const Text("Cancel"),
+                        ),
+                        FilledButton(
+                          onPressed: () {
+                            context.read<SplitBloc>().add(
+                              OnRemoveItemEvent(item.id),
+                            );
+                            Navigator.pop(dialogContext);
+                          },
+                          child: const Text("Remove"),
+                        ),
+                      ],
+                    ),
+              );
+            },
+            icon: const Icon(Icons.delete_outline_rounded),
+            label: const Text("Remove"),
+            style: TextButton.styleFrom(
+              foregroundColor: context.colorScheme.error,
+              minimumSize: const Size(double.infinity, 48),
+            ),
           ),
         ],
       ),

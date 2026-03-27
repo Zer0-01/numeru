@@ -29,6 +29,7 @@ class SplitState extends Equatable {
     double? taxPercentage,
     double? serviceChargeRate,
     SplitSummaryModel? summaryModel,
+    bool clearSummary = false,
   }) {
     return SplitState(
       splitStatus: splitStatus ?? this.splitStatus,
@@ -37,7 +38,7 @@ class SplitState extends Equatable {
       taxMode: taxMode ?? this.taxMode,
       taxPercentage: taxPercentage ?? this.taxPercentage,
       serviceChargeRate: serviceChargeRate ?? this.serviceChargeRate,
-      summaryModel: summaryModel ?? this.summaryModel,
+      summaryModel: clearSummary ? null : (summaryModel ?? this.summaryModel),
     );
   }
 

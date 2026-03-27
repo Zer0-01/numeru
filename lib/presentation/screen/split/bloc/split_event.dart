@@ -135,3 +135,10 @@ class OnCalculateSplitEvent extends SplitEvent {
   @override
   List<Object> get props => [];
 }
+
+class OnResetSplitStatusEvent extends SplitEvent {
+  const OnResetSplitStatusEvent();
+
+  @override
+  List<Object> get props => [];
+}

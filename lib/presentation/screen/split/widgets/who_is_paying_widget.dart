@@ -74,33 +74,40 @@ class _WhoIsPayingWidgetState extends State<WhoIsPayingWidget> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                    height: SizesConstant.widthPercentage(context, 14) + 30,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: AnimatedList(
-                            key: _listKey,
-                            scrollDirection: Axis.horizontal,
-                            initialItemCount: _people.length,
-                            itemBuilder: (context, index, animation) {
-                              return _buildPersonItem(
-                                _people[index],
-                                animation,
-                              );
-                            },
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SizedBox(
+                      height: SizesConstant.widthPercentage(context, 14) + 30,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: AnimatedList(
+                              key: _listKey,
+                              scrollDirection: Axis.horizontal,
+                              initialItemCount: _people.length,
+                              itemBuilder: (context, index, animation) {
+                                return _buildPersonItem(
+                                  _people[index],
+                                  animation,
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        IconButton(
-                          onPressed:
-                              () => context.read<SplitBloc>().add(
-                                const OnAddPeopleEvent(),
-                              ),
-                          icon: const Icon(Icons.add_rounded),
-                        ),
-                      ],
+                          const SizedBox(width: 12),
+                          IconButton(
+                            onPressed:
+                                () => context.read<SplitBloc>().add(
+                                  const OnAddPeopleEvent(),
+                                ),
+                            icon: const Icon(Icons.add_rounded),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

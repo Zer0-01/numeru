@@ -26,6 +26,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     on<OnUpdateTaxValueEvent>(_onUpdateTaxValueEvent);
     on<OnUpdateServiceChargeRateEvent>(_onUpdateServiceChargeRateEvent);
     on<OnCalculateSplitEvent>(_onCalculateSplitEvent);
+    on<OnResetSplitStatusEvent>(_onResetSplitStatusEvent);
   }
 
   void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<SplitState> emit) {
@@ -204,6 +205,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     Emitter<SplitState> emit,
   ) {
     _logger.debug("OnCalculateSplitEvent");
+    emit(state.copyWith(splitStatus: SplitStatus.loading));
 
     final double taxRate = state.taxPercentage / 100;
     final double serviceChargeRate = state.serviceChargeRate / 100;
@@ -326,6 +328,16 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
       personSummaries: personSummaries,
     );
 
-    emit(state.copyWith(summaryModel: summary));
+    emit(
+      state.copyWith(splitStatus: SplitStatus.success, summaryModel: summary),
+    );
+  }
+
+  void _onResetSplitStatusEvent(
+    OnResetSplitStatusEvent event,
+    Emitter<SplitState> emit,
+  ) {
+    _logger.debug("OnResetSplitStatusEvent");
+    emit(state.copyWith(splitStatus: SplitStatus.initial));
   }
 }

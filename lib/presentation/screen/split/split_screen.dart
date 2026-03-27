@@ -16,10 +16,12 @@ class SplitScreen extends StatelessWidget {
     return BlocListener<SplitBloc, SplitState>(
       listenWhen:
           (previous, current) =>
-              previous.summaryModel == null && current.summaryModel != null,
+              previous.splitStatus != SplitStatus.success &&
+              current.splitStatus == SplitStatus.success,
       listener: (context, state) {
         if (state.summaryModel != null) {
           context.router.push(SplitSummaryRoute(summary: state.summaryModel!));
+          context.read<SplitBloc>().add(const OnResetSplitStatusEvent());
         }
       },
       child: BlocBuilder<SplitBloc, SplitState>(
