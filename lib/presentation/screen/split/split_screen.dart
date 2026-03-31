@@ -50,10 +50,10 @@ class SplitScreen extends StatelessWidget {
 
           return Scaffold(
             appBar: AppBar(
-              leading: IconButton(
-                onPressed: () => context.router.maybePop(),
-                icon: const Icon(Icons.chevron_left),
-              ),
+              // leading: IconButton(
+              //   onPressed: () => context.router.maybePop(),
+              //   icon: const Icon(Icons.chevron_left),
+              // ),
               title: const Text("Split"),
             ),
             body: const CustomScrollView(

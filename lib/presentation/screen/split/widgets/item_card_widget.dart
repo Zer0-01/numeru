@@ -114,6 +114,7 @@ class ItemCardWidget extends StatelessWidget {
                             );
                           },
                         );
+                        if (!context.mounted) return;
                         if (qty != null) {
                           context.read<SplitBloc>().add(
                             OnUpdateItemEvent(id: item.id, quantity: qty),

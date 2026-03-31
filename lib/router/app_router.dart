@@ -7,8 +7,8 @@ class AppRouter extends RootStackRouter {
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: HomeSetupRoute.page, path: '/', initial: true),
-    AutoRoute(page: SplitSetupRoute.page, path: '/split'),
+    AutoRoute(page: SplitSetupRoute.page, path: '/', initial: true),
+    AutoRoute(page: HomeSetupRoute.page, path: '/home'),
     AutoRoute(page: SplitSummaryRoute.page, path: '/split-summary'),
     AutoRoute(page: SettingsSetupRoute.page, path: '/settings'),
     AutoRoute(page: LanguageSetupRoute.page, path: '/language'),
