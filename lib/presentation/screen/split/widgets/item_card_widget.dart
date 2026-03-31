@@ -61,22 +61,16 @@ class ItemCardWidget extends StatelessWidget {
                           previous.taxMode != current.taxMode,
                   builder: (context, state) {
                     return TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Price",
-                        prefixIcon: const Icon(
-                          Icons.attach_money_rounded,
-                          size: 18,
-                        ),
-                        suffixText:
-                            state.taxMode == "INCLUSIVE" ? "incl." : "excl.",
-                        suffixStyle: context.textTheme.bodySmall?.copyWith(
-                          color: context.colorScheme.onSurfaceVariant,
-                          fontSize: 10,
-                        ),
+                        prefixText: "RM  ",
                       ),
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
+                      },
                       initialValue: item.price > 0 ? item.price.toString() : "",
                       onChanged: (val) {
                         final price = double.tryParse(val) ?? 0.0;

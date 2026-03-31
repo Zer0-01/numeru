@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:numeru/data/models/split_summary_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
+import 'package:numeru/extensions/num_extension.dart';
 
 @RoutePage()
 class SplitSummaryScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class SplitSummaryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Split Summary"),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -41,21 +42,16 @@ class SplitSummaryScreen extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final person = summary.personSummaries[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: _PersonSummaryCard(person: person),
-                  );
-                },
-                childCount: summary.personSummaries.length,
-              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final person = summary.personSummaries[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _PersonSummaryCard(person: person),
+                );
+              }, childCount: summary.personSummaries.length),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 32),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),
     );
@@ -84,12 +80,10 @@ class _GeneralInfoCard extends StatelessWidget {
       ),
       child: Column(
         children: [
+          _InfoRow(label: "Subtotal", value: summary.subtotal),
           _InfoRow(
-            label: "Subtotal",
-            value: summary.subtotal,
-          ),
-          _InfoRow(
-            label: "Service Charge (${(summary.serviceChargeAmount / summary.subtotal * 100).toStringAsFixed(0)}%)",
+            label:
+                "Service Charge (${(summary.serviceChargeAmount / summary.subtotal * 100).toStringAsFixed(0)}%)",
             value: summary.serviceChargeAmount,
           ),
           if (summary.taxMode == "INCLUSIVE")
@@ -104,16 +98,9 @@ class _GeneralInfoCard extends StatelessWidget {
               value: summary.taxAmount,
             ),
           if (summary.roundingAmount.abs() > 0.001)
-            _InfoRow(
-              label: "Rounding",
-              value: summary.roundingAmount,
-            ),
+            _InfoRow(label: "Rounding", value: summary.roundingAmount),
           const Divider(height: 24),
-          _InfoRow(
-            label: "Total",
-            value: summary.totalAmount,
-            isTotal: true,
-          ),
+          _InfoRow(label: "Total", value: summary.totalAmount, isTotal: true),
           if (summary.taxMode == "INCLUSIVE")
             Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -143,9 +130,7 @@ class _PersonSummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: context.colorScheme.outlineVariant,
-        ),
+        border: Border.all(color: context.colorScheme.outlineVariant),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +145,7 @@ class _PersonSummaryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                person.totalAmount.toString(),
+                person.totalAmount.toRM() ?? "RM 0.00",
                 style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colorScheme.primary,
@@ -203,34 +188,36 @@ class _InfoRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: isTotal
-              ? context.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                )
-              : isSecondary
+          style:
+              isTotal
+                  ? context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  )
+                  : isSecondary
                   ? context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
-                      fontStyle: FontStyle.italic,
-                    )
+                    color: context.colorScheme.onSurfaceVariant,
+                    fontStyle: FontStyle.italic,
+                  )
                   : context.textTheme.bodyMedium?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
-                    ),
+                    color: context.colorScheme.onSurfaceVariant,
+                  ),
         ),
         Text(
-          value.toStringAsFixed(2),
-          style: isTotal
-              ? context.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colorScheme.primary,
-                )
-              : isSecondary
+          value.toRM() ?? "RM 0.00",
+          style:
+              isTotal
+                  ? context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colorScheme.primary,
+                  )
+                  : isSecondary
                   ? context.textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic,
-                    )
+                    fontWeight: FontWeight.w500,
+                    fontStyle: FontStyle.italic,
+                  )
                   : context.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    fontWeight: FontWeight.w600,
+                  ),
         ),
       ],
     );
