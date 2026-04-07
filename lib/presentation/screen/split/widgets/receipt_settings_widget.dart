@@ -40,42 +40,37 @@ class ReceiptSettingsWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Tax Mode",
+                        "Bill Situation",
                         style: context.textTheme.labelMedium?.copyWith(
                           color: context.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      SegmentedButton<String>(
-                        segments: const [
-                          ButtonSegment(
-                            value: "INCLUSIVE",
-                            label: Text("Incl."),
-                            tooltip: "Price includes SST",
-                          ),
-                          ButtonSegment(
-                            value: "EXCLUSIVE",
-                            label: Text("Excl."),
-                            tooltip: "SST added separately",
+                      DropdownButton<SituationType>(
+                        value: state.situationType,
+                        underline: const SizedBox(),
+                        items: const [
+                          DropdownMenuItem(
+                            value: SituationType.standardCafe,
+                            child: Text("Standard Café (++)"),
                           ),
                         ],
-                        selected: {state.taxMode},
-                        onSelectionChanged: (Set<String> newSelection) {
-                          context.read<SplitBloc>().add(
-                            OnUpdateTaxModeEvent(newSelection.first),
-                          );
+                        onChanged: (val) {
+                          if (val != null) {
+                            context.read<SplitBloc>().add(
+                              OnUpdateSituationTypeEvent(val),
+                            );
+                          }
                         },
-                        showSelectedIcon: false,
                       ),
                     ],
                   ),
-                  if (state.taxMode == "INCLUSIVE")
-                    Text(
-                      "Price includes SST",
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.colorScheme.primary,
-                        fontStyle: FontStyle.italic,
-                      ),
+                  Text(
+                    "Service (10%) + SST (6%) applied to total",
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.primary,
+                      fontStyle: FontStyle.italic,
                     ),
+                  ),
                   const Divider(height: 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

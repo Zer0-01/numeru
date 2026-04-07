@@ -3,33 +3,29 @@ import 'package:equatable/equatable.dart';
 import 'package:numeru/config/app_logger.dart';
 import 'package:numeru/data/models/item_model.dart';
 import 'package:numeru/data/models/person_model.dart';
-
 import 'package:numeru/data/models/split_summary_model.dart';
 import 'package:numeru/logic/split_bill/split_bill_calculator.dart';
 
-part 'split_event.dart';
-part 'split_state.dart';
+part 'equal_split_event.dart';
+part 'equal_split_state.dart';
 
-class SplitBloc extends Bloc<SplitEvent, SplitState> {
-  final AppLogger _logger = AppLogger.getLogger('SplitBloc');
+class EqualSplitBloc extends Bloc<EqualSplitEvent, EqualSplitState> {
+  final AppLogger _logger = AppLogger.getLogger('EqualSplitBloc');
 
-  SplitBloc() : super(const SplitState()) {
+  EqualSplitBloc() : super(const EqualSplitState()) {
     on<OnAddPeopleEvent>(_onAddPeopleEvent);
     on<OnRemovePeopleEvent>(_onRemovePeopleEvent);
     on<OnAddItemEvent>(_onAddItemEvent);
     on<OnRemoveItemEvent>(_onRemoveItemEvent);
     on<OnUpdateItemEvent>(_onUpdateItemEvent);
     on<OnToggleItemTaxableEvent>(_onToggleItemTaxableEvent);
-    on<OnToggleItemPersonEvent>(_onToggleItemPersonEvent);
-    on<OnToggleAllItemPersonsEvent>(_onToggleAllItemPersonsEvent);
-    on<OnUpdateSituationTypeEvent>(_onUpdateSituationTypeEvent);
     on<OnUpdateTaxValueEvent>(_onUpdateTaxValueEvent);
     on<OnUpdateServiceChargeRateEvent>(_onUpdateServiceChargeRateEvent);
     on<OnCalculateSplitEvent>(_onCalculateSplitEvent);
     on<OnResetSplitStatusEvent>(_onResetSplitStatusEvent);
   }
 
-  void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<SplitState> emit) {
+  void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<EqualSplitState> emit) {
     _logger.debug("OnAddPeopleEvent");
     final nextId =
         state.peopleModel.isEmpty
@@ -44,7 +40,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(peopleModel: [...state.peopleModel, person]));
   }
 
-  void _onAddItemEvent(OnAddItemEvent event, Emitter<SplitState> emit) {
+  void _onAddItemEvent(OnAddItemEvent event, Emitter<EqualSplitState> emit) {
     _logger.debug("OnAddItemEvent");
     final nextId =
         state.itemsModel.isEmpty
@@ -62,7 +58,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(itemsModel: updatedItems));
   }
 
-  void _onRemoveItemEvent(OnRemoveItemEvent event, Emitter<SplitState> emit) {
+  void _onRemoveItemEvent(OnRemoveItemEvent event, Emitter<EqualSplitState> emit) {
     _logger.debug("OnRemoveItemEvent: ${event.itemId}");
     final updatedItems =
         state.itemsModel.where((item) => item.id != event.itemId).toList();
@@ -70,7 +66,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(itemsModel: updatedItems));
   }
 
-  void _onUpdateItemEvent(OnUpdateItemEvent event, Emitter<SplitState> emit) {
+  void _onUpdateItemEvent(OnUpdateItemEvent event, Emitter<EqualSplitState> emit) {
     _logger.debug("OnUpdateItemEvent: ${event.id}");
     final updatedItems =
         state.itemsModel.map((item) {
@@ -87,10 +83,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(itemsModel: updatedItems));
   }
 
-
   void _onToggleItemTaxableEvent(
     OnToggleItemTaxableEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
     _logger.debug("OnToggleItemTaxableEvent: ${event.id}");
     final updatedItems =
@@ -104,55 +99,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(itemsModel: updatedItems));
   }
 
-  void _onToggleItemPersonEvent(
-    OnToggleItemPersonEvent event,
-    Emitter<SplitState> emit,
-  ) {
-    _logger.debug(
-      "OnToggleItemPersonEvent: item ${event.itemId}, person ${event.personId}",
-    );
-    final updatedItems =
-        state.itemsModel.map((item) {
-          if (item.id == event.itemId) {
-            final updatedPersonIds = List<int>.from(item.personIds);
-            if (updatedPersonIds.contains(event.personId)) {
-              updatedPersonIds.remove(event.personId);
-            } else {
-              updatedPersonIds.add(event.personId);
-            }
-            return item.copyWith(personIds: updatedPersonIds);
-          }
-          return item;
-        }).toList();
-
-    emit(state.copyWith(itemsModel: updatedItems));
-  }
-
-  void _onToggleAllItemPersonsEvent(
-    OnToggleAllItemPersonsEvent event,
-    Emitter<SplitState> emit,
-  ) {
-    _logger.debug(
-      "OnToggleAllItemPersonsEvent: item ${event.itemId}, isShared ${event.isShared}",
-    );
-    final updatedItems =
-        state.itemsModel.map((item) {
-          if (item.id == event.itemId) {
-            final updatedPersonIds =
-                event.isShared
-                    ? state.peopleModel.map((e) => e.id).toList()
-                    : <int>[];
-            return item.copyWith(personIds: updatedPersonIds);
-          }
-          return item;
-        }).toList();
-
-    emit(state.copyWith(itemsModel: updatedItems));
-  }
-
   void _onRemovePeopleEvent(
     OnRemovePeopleEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
     _logger.debug("OnRemovePeopleEvent: ${event.id}");
     final updatedPeople =
@@ -160,17 +109,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
     emit(state.copyWith(peopleModel: updatedPeople));
   }
 
-  void _onUpdateSituationTypeEvent(
-    OnUpdateSituationTypeEvent event,
-    Emitter<SplitState> emit,
-  ) {
-    _logger.debug("OnUpdateSituationTypeEvent: ${event.situationType}");
-    emit(state.copyWith(situationType: event.situationType));
-  }
-
   void _onUpdateTaxValueEvent(
     OnUpdateTaxValueEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
     _logger.debug("OnUpdateTaxValueEvent: ${event.taxPercentage}");
     emit(state.copyWith(taxPercentage: event.taxPercentage));
@@ -178,7 +119,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
   void _onUpdateServiceChargeRateEvent(
     OnUpdateServiceChargeRateEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
     _logger.debug("OnUpdateServiceChargeRateEvent: ${event.serviceChargeRate}");
     emit(state.copyWith(serviceChargeRate: event.serviceChargeRate));
@@ -186,8 +127,9 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
   void _onCalculateSplitEvent(
     OnCalculateSplitEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
+    _logger.debug("OnCalculateSplitEvent");
     emit(state.copyWith(splitStatus: SplitStatus.loading));
 
     final summary = SplitBillCalculator.calculateSituation1(
@@ -204,7 +146,7 @@ class SplitBloc extends Bloc<SplitEvent, SplitState> {
 
   void _onResetSplitStatusEvent(
     OnResetSplitStatusEvent event,
-    Emitter<SplitState> emit,
+    Emitter<EqualSplitState> emit,
   ) {
     _logger.debug("OnResetSplitStatusEvent");
     emit(state.copyWith(splitStatus: SplitStatus.initial));

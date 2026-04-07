@@ -61,14 +61,12 @@ class OnUpdateItemEvent extends SplitEvent {
   final int id;
   final String? name;
   final double? price;
-  final int? quantity;
   final bool? isTaxable;
 
   const OnUpdateItemEvent({
     required this.id,
     this.name,
     this.price,
-    this.quantity,
     this.isTaxable,
   });
 
@@ -77,20 +75,10 @@ class OnUpdateItemEvent extends SplitEvent {
     id,
     name ?? '',
     price ?? 0.0,
-    quantity ?? 1,
     isTaxable ?? true,
   ];
 }
 
-class OnUpdateItemQuantityEvent extends SplitEvent {
-  final int id;
-  final int quantity;
-
-  const OnUpdateItemQuantityEvent({required this.id, required this.quantity});
-
-  @override
-  List<Object> get props => [id, quantity];
-}
 
 class OnToggleItemTaxableEvent extends SplitEvent {
   final int id;
@@ -102,13 +90,13 @@ class OnToggleItemTaxableEvent extends SplitEvent {
   List<Object> get props => [id, isTaxable];
 }
 
-class OnUpdateTaxModeEvent extends SplitEvent {
-  final String taxMode;
+class OnUpdateSituationTypeEvent extends SplitEvent {
+  final SituationType situationType;
 
-  const OnUpdateTaxModeEvent(this.taxMode);
+  const OnUpdateSituationTypeEvent(this.situationType);
 
   @override
-  List<Object> get props => [taxMode];
+  List<Object> get props => [situationType];
 }
 
 class OnUpdateTaxValueEvent extends SplitEvent {

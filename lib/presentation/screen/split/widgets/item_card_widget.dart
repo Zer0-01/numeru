@@ -4,7 +4,6 @@ import 'package:numeru/data/models/item_model.dart';
 import 'package:numeru/data/models/person_model.dart';
 import 'package:numeru/extensions/context_extension.dart';
 import 'package:numeru/presentation/screen/split/bloc/split_bloc.dart';
-import 'package:numeru/presentation/screen/split/widgets/quantity_bottom_sheet_widget.dart';
 
 class ItemCardWidget extends StatelessWidget {
   final ItemModel item;
@@ -55,26 +54,19 @@ class ItemCardWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: BlocBuilder<SplitBloc, SplitState>(
-                  buildWhen:
-                      (previous, current) =>
-                          previous.taxMode != current.taxMode,
-                  builder: (context, state) {
-                    return TextFormField(
-                      decoration: const InputDecoration(hintText: "Price (RM)"),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      onTapOutside: (event) {
-                        FocusScope.of(context).unfocus();
-                      },
-                      initialValue: item.price > 0 ? item.price.toString() : "",
-                      onChanged: (val) {
-                        final price = double.tryParse(val) ?? 0.0;
-                        context.read<SplitBloc>().add(
-                          OnUpdateItemEvent(id: item.id, price: price),
-                        );
-                      },
+                child: TextFormField(
+                  decoration: const InputDecoration(hintText: "Price (RM)"),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  initialValue: item.price > 0 ? item.price.toString() : "",
+                  onChanged: (val) {
+                    final price = double.tryParse(val) ?? 0.0;
+                    context.read<SplitBloc>().add(
+                      OnUpdateItemEvent(id: item.id, price: price),
                     );
                   },
                 ),
@@ -84,57 +76,7 @@ class ItemCardWidget extends StatelessWidget {
           Row(
             spacing: 12,
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Text(
-                      "Qty:",
-                      style: context.textTheme.labelMedium?.copyWith(
-                        color: context.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    InkWell(
-                      onTap: () async {
-                        final qty = await showModalBottomSheet<int>(
-                          context: context,
-                          showDragHandle: true,
-                          builder: (context) {
-                            return QuantityBottomSheetWidget(
-                              selectedQuantity: item.quantity,
-                            );
-                          },
-                        );
-                        if (!context.mounted) return;
-                        if (qty != null) {
-                          context.read<SplitBloc>().add(
-                            OnUpdateItemEvent(id: item.id, quantity: qty),
-                          );
-                        }
-                      },
-                      child: Container(
-                        width: 50,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: context.colorScheme.outlineVariant,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            item.quantity.toString(),
-                            style: context.textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const Spacer(),
               Row(
                 children: [
                   Text(

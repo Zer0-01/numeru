@@ -8,6 +8,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(page: SplitSetupRoute.page, path: '/', initial: true),
+    AutoRoute(page: EqualSplitSetupRoute.page, path: '/equal-split'),
     AutoRoute(page: HomeSetupRoute.page, path: '/home'),
     AutoRoute(page: SplitSummaryRoute.page, path: '/split-summary'),
     AutoRoute(page: SettingsSetupRoute.page, path: '/settings'),

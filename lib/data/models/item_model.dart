@@ -7,7 +7,6 @@ class ItemModel {
   final int id;
   final String name;
   final double price;
-  final int quantity;
   final bool isTaxable;
   final List<int> personIds;
 
@@ -15,7 +14,6 @@ class ItemModel {
     required this.id,
     required this.name,
     required this.price,
-    this.quantity = 1,
     this.isTaxable = true,
     required this.personIds,
   });
@@ -24,7 +22,6 @@ class ItemModel {
     int? id,
     String? name,
     double? price,
-    int? quantity,
     bool? isTaxable,
     List<int>? personIds,
   }) {
@@ -32,7 +29,6 @@ class ItemModel {
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
-      quantity: quantity ?? this.quantity,
       isTaxable: isTaxable ?? this.isTaxable,
       personIds: personIds ?? this.personIds,
     );

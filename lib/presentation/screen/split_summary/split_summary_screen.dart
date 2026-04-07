@@ -86,32 +86,14 @@ class _GeneralInfoCard extends StatelessWidget {
                 "Service Charge (${(summary.serviceChargeAmount / summary.subtotal * 100).toStringAsFixed(0)}%)",
             value: summary.serviceChargeAmount,
           ),
-          if (summary.taxMode == "INCLUSIVE")
-            _InfoRow(
-              label: "Included SST (${summary.taxPercentage}%)",
-              value: summary.includedTaxAmount,
-              isSecondary: true,
-            )
-          else
-            _InfoRow(
-              label: "SST (${summary.taxPercentage}%)",
-              value: summary.taxAmount,
-            ),
+          _InfoRow(
+            label: "SST (${summary.taxPercentage}%)",
+            value: summary.taxAmount,
+          ),
           if (summary.roundingAmount.abs() > 0.001)
             _InfoRow(label: "Rounding", value: summary.roundingAmount),
           const Divider(height: 24),
           _InfoRow(label: "Total", value: summary.totalAmount, isTotal: true),
-          if (summary.taxMode == "INCLUSIVE")
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                "Price includes SST",
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colorScheme.primary,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ),
         ],
       ),
     );
@@ -172,13 +154,11 @@ class _InfoRow extends StatelessWidget {
   final String label;
   final double value;
   final bool isTotal;
-  final bool isSecondary;
 
   const _InfoRow({
     required this.label,
     required this.value,
     this.isTotal = false,
-    this.isSecondary = false,
   });
 
   @override
@@ -193,11 +173,6 @@ class _InfoRow extends StatelessWidget {
                   ? context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   )
-                  : isSecondary
-                  ? context.textTheme.bodySmall?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                    fontStyle: FontStyle.italic,
-                  )
                   : context.textTheme.bodyMedium?.copyWith(
                     color: context.colorScheme.onSurfaceVariant,
                   ),
@@ -209,11 +184,6 @@ class _InfoRow extends StatelessWidget {
                   ? context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: context.colorScheme.primary,
-                  )
-                  : isSecondary
-                  ? context.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.italic,
                   )
                   : context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,

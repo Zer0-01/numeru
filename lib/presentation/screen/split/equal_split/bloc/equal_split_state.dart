@@ -1,45 +1,37 @@
-part of 'split_bloc.dart';
+part of 'equal_split_bloc.dart';
 
 enum SplitStatus { initial, loading, success, failure }
 
-enum SituationType {
-  standardCafe, // Situation 1
-}
-
-class SplitState extends Equatable {
+class EqualSplitState extends Equatable {
   final SplitStatus splitStatus;
   final List<PersonModel> peopleModel;
   final List<ItemModel> itemsModel;
-  final SituationType situationType;
   final double taxPercentage;
   final double serviceChargeRate;
   final SplitSummaryModel? summaryModel;
 
-  const SplitState({
+  const EqualSplitState({
     this.splitStatus = SplitStatus.initial,
     this.peopleModel = const [],
     this.itemsModel = const [],
-    this.situationType = SituationType.standardCafe,
     this.taxPercentage = 6,
     this.serviceChargeRate = 10.0,
     this.summaryModel,
   });
 
-  SplitState copyWith({
+  EqualSplitState copyWith({
     SplitStatus? splitStatus,
     List<PersonModel>? peopleModel,
     List<ItemModel>? itemsModel,
-    SituationType? situationType,
     double? taxPercentage,
     double? serviceChargeRate,
     SplitSummaryModel? summaryModel,
     bool clearSummary = false,
   }) {
-    return SplitState(
+    return EqualSplitState(
       splitStatus: splitStatus ?? this.splitStatus,
       peopleModel: peopleModel ?? this.peopleModel,
       itemsModel: itemsModel ?? this.itemsModel,
-      situationType: situationType ?? this.situationType,
       taxPercentage: taxPercentage ?? this.taxPercentage,
       serviceChargeRate: serviceChargeRate ?? this.serviceChargeRate,
       summaryModel: clearSummary ? null : (summaryModel ?? this.summaryModel),
@@ -51,7 +43,6 @@ class SplitState extends Equatable {
     splitStatus,
     peopleModel,
     itemsModel,
-    situationType,
     taxPercentage,
     serviceChargeRate,
     summaryModel,
