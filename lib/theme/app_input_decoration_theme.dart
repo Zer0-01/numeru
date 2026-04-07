@@ -17,7 +17,7 @@ class AppInputDecorationTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.primary),
+        borderSide: const BorderSide(color: Colors.transparent),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -42,7 +42,7 @@ class AppInputDecorationTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: scheme.primary),
+        borderSide: const BorderSide(color: Colors.transparent),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

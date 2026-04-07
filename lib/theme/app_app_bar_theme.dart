@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppAppBarTheme {
   static AppBarTheme light(ColorScheme scheme) {
     return AppBarTheme(
-      backgroundColor: scheme.surface,
+      backgroundColor: scheme.surfaceContainerLowest,
       foregroundColor: scheme.onSurface,
       surfaceTintColor: Colors.transparent,
       centerTitle: true,

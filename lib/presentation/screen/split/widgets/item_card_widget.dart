@@ -61,10 +61,7 @@ class ItemCardWidget extends StatelessWidget {
                           previous.taxMode != current.taxMode,
                   builder: (context, state) {
                     return TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: "Price",
-                        prefixText: "RM  ",
-                      ),
+                      decoration: const InputDecoration(hintText: "Price (RM)"),
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
