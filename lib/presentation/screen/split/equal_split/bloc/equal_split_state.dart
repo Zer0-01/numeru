@@ -1,18 +1,19 @@
 part of 'equal_split_bloc.dart';
 
+
 enum SplitStatus { initial, loading, success, failure }
 
 class EqualSplitState extends Equatable {
   final SplitStatus splitStatus;
-  final List<PersonModel> peopleModel;
+  final int numberOfPeople;
   final List<ItemModel> itemsModel;
   final double taxPercentage;
   final double serviceChargeRate;
-  final SplitSummaryModel? summaryModel;
+  final EqualSplitSummaryModel? summaryModel;
 
   const EqualSplitState({
     this.splitStatus = SplitStatus.initial,
-    this.peopleModel = const [],
+    this.numberOfPeople = 1,
     this.itemsModel = const [],
     this.taxPercentage = 6,
     this.serviceChargeRate = 10.0,
@@ -21,16 +22,16 @@ class EqualSplitState extends Equatable {
 
   EqualSplitState copyWith({
     SplitStatus? splitStatus,
-    List<PersonModel>? peopleModel,
+    int? numberOfPeople,
     List<ItemModel>? itemsModel,
     double? taxPercentage,
     double? serviceChargeRate,
-    SplitSummaryModel? summaryModel,
+    EqualSplitSummaryModel? summaryModel,
     bool clearSummary = false,
   }) {
     return EqualSplitState(
       splitStatus: splitStatus ?? this.splitStatus,
-      peopleModel: peopleModel ?? this.peopleModel,
+      numberOfPeople: numberOfPeople ?? this.numberOfPeople,
       itemsModel: itemsModel ?? this.itemsModel,
       taxPercentage: taxPercentage ?? this.taxPercentage,
       serviceChargeRate: serviceChargeRate ?? this.serviceChargeRate,
@@ -41,7 +42,7 @@ class EqualSplitState extends Equatable {
   @override
   List<Object?> get props => [
     splitStatus,
-    peopleModel,
+    numberOfPeople,
     itemsModel,
     taxPercentage,
     serviceChargeRate,

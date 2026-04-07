@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:numeru/config/app_logger.dart';
 import 'package:numeru/data/models/item_model.dart';
 import 'package:numeru/data/models/person_model.dart';
-import 'package:numeru/data/models/split_summary_model.dart';
+import 'package:numeru/presentation/screen/split/equal_split/models/equal_split_summary.dart';
 import 'package:numeru/logic/split_bill/split_bill_calculator.dart';
 
 part 'equal_split_event.dart';
@@ -13,8 +13,6 @@ class EqualSplitBloc extends Bloc<EqualSplitEvent, EqualSplitState> {
   final AppLogger _logger = AppLogger.getLogger('EqualSplitBloc');
 
   EqualSplitBloc() : super(const EqualSplitState()) {
-    on<OnAddPeopleEvent>(_onAddPeopleEvent);
-    on<OnRemovePeopleEvent>(_onRemovePeopleEvent);
     on<OnAddItemEvent>(_onAddItemEvent);
     on<OnRemoveItemEvent>(_onRemoveItemEvent);
     on<OnUpdateItemEvent>(_onUpdateItemEvent);
@@ -23,22 +21,17 @@ class EqualSplitBloc extends Bloc<EqualSplitEvent, EqualSplitState> {
     on<OnUpdateServiceChargeRateEvent>(_onUpdateServiceChargeRateEvent);
     on<OnCalculateSplitEvent>(_onCalculateSplitEvent);
     on<OnResetSplitStatusEvent>(_onResetSplitStatusEvent);
+    on<OnUpdatePeopleQuantityEvent>(_onUpdatePeopleQuantityEvent);
   }
 
-  void _onAddPeopleEvent(OnAddPeopleEvent event, Emitter<EqualSplitState> emit) {
-    _logger.debug("OnAddPeopleEvent");
-    final nextId =
-        state.peopleModel.isEmpty
-            ? 1
-            : state.peopleModel
-                    .map((e) => e.id)
-                    .reduce((a, b) => a > b ? a : b) +
-                1;
-
-    final PersonModel person = PersonModel(id: nextId, name: "Person $nextId");
-
-    emit(state.copyWith(peopleModel: [...state.peopleModel, person]));
+  void _onUpdatePeopleQuantityEvent(
+    OnUpdatePeopleQuantityEvent event,
+    Emitter<EqualSplitState> emit,
+  ) {
+    _logger.debug("OnUpdatePeopleQuantityEvent: ${event.quantity}");
+    emit(state.copyWith(numberOfPeople: event.quantity));
   }
+
 
   void _onAddItemEvent(OnAddItemEvent event, Emitter<EqualSplitState> emit) {
     _logger.debug("OnAddItemEvent");
@@ -99,15 +92,6 @@ class EqualSplitBloc extends Bloc<EqualSplitEvent, EqualSplitState> {
     emit(state.copyWith(itemsModel: updatedItems));
   }
 
-  void _onRemovePeopleEvent(
-    OnRemovePeopleEvent event,
-    Emitter<EqualSplitState> emit,
-  ) {
-    _logger.debug("OnRemovePeopleEvent: ${event.id}");
-    final updatedPeople =
-        state.peopleModel.where((p) => p.id != event.id).toList();
-    emit(state.copyWith(peopleModel: updatedPeople));
-  }
 
   void _onUpdateTaxValueEvent(
     OnUpdateTaxValueEvent event,
@@ -132,15 +116,38 @@ class EqualSplitBloc extends Bloc<EqualSplitEvent, EqualSplitState> {
     _logger.debug("OnCalculateSplitEvent");
     emit(state.copyWith(splitStatus: SplitStatus.loading));
 
+    // Create temporary people for the calculator
+    final List<PersonModel> tempPeople = List.generate(
+      state.numberOfPeople,
+      (index) => PersonModel(id: index + 1, name: "Person ${index + 1}"),
+    );
+
     final summary = SplitBillCalculator.calculateSituation1(
       items: state.itemsModel,
-      people: state.peopleModel,
+      people: tempPeople,
       taxRatePercentage: state.taxPercentage,
       serviceChargeRatePercentage: state.serviceChargeRate,
     );
 
+    // Convert SplitSummaryModel to EqualSplitSummaryModel
+    final equalSummary = EqualSplitSummaryModel(
+      subtotal: summary.subtotal,
+      taxAmount: summary.taxAmount,
+      taxPercentage: summary.taxPercentage,
+      serviceChargeAmount: summary.serviceChargeAmount,
+      totalAmount: summary.totalAmount,
+      roundingAmount: summary.roundingAmount,
+      numberOfPeople: state.numberOfPeople,
+      amountPerPerson: summary.personSummaries.isNotEmpty
+          ? summary.personSummaries.first.totalAmount
+          : 0,
+    );
+
     emit(
-      state.copyWith(splitStatus: SplitStatus.success, summaryModel: summary),
+      state.copyWith(
+        splitStatus: SplitStatus.success,
+        summaryModel: equalSummary,
+      ),
     );
   }
 

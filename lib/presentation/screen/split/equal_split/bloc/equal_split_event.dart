@@ -7,19 +7,13 @@ sealed class EqualSplitEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnAddPeopleEvent extends EqualSplitEvent {
-  const OnAddPeopleEvent();
+
+class OnUpdatePeopleQuantityEvent extends EqualSplitEvent {
+  final int quantity;
+  const OnUpdatePeopleQuantityEvent(this.quantity);
 
   @override
-  List<Object> get props => [];
-}
-
-class OnRemovePeopleEvent extends EqualSplitEvent {
-  final int id;
-  const OnRemovePeopleEvent(this.id);
-
-  @override
-  List<Object> get props => [id];
+  List<Object> get props => [quantity];
 }
 
 class OnAddItemEvent extends EqualSplitEvent {

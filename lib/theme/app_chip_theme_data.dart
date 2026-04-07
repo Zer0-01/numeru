@@ -4,7 +4,7 @@ class AppChipThemeData {
   static ChipThemeData light(ColorScheme scheme) {
     return ChipThemeData(
       backgroundColor: scheme.surfaceContainerLow,
-      selectedColor: scheme.primaryContainer,
+      selectedColor: scheme.primary,
       checkmarkColor: scheme.onPrimary,
       side: const BorderSide(color: Colors.transparent),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
