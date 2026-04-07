@@ -61,7 +61,15 @@ class SplitScreen extends StatelessWidget {
                 WhoIsPayingWidget(),
                 ItemListWidget(),
                 ReceiptSettingsWidget(),
+                SliverToBoxAdapter(child: SizedBox(height: 100)),
               ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                context.read<SplitBloc>().add(const OnAddItemEvent());
+              },
+              tooltip: 'Add Item',
+              child: const Icon(Icons.add),
             ),
             bottomNavigationBar: BottomAppBar(
               child: Row(

@@ -21,12 +21,6 @@ class ItemListWidget extends StatelessWidget {
                   child: ItemCardWidget(item: item, persons: state.peopleModel),
                 ),
               ),
-              OutlinedButton(
-                child: const Text("Add Item"),
-                onPressed: () {
-                  context.read<SplitBloc>().add(const OnAddItemEvent());
-                },
-              ),
             ]),
           ),
         );
